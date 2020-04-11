@@ -1,7 +1,7 @@
 package com.ms.wms.security.oauth2;
 
 import com.ms.wms.domain.Member;
-import com.ms.wms.domain.MemberRepository;
+import com.ms.wms.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
@@ -30,8 +30,8 @@ public class MyOAuth2AuthorizedClientService implements OAuth2AuthorizedClientSe
         OAuth2RefreshToken refreshToken = oAuth2AuthorizedClient.getRefreshToken();
 
         OAuth2User oauth2User = (OAuth2User) authentication.getPrincipal();
-        String id = String.valueOf(oauth2User.getAttributes().get("id"));
-        String name = (String) ((LinkedHashMap) ((LinkedHashMap) oauth2User.getAttribute("kakao_account")).get("profile")).get("nickname");
+        String id = oauth2User.getName();
+        String name = oauth2User.getAttribute("name");
 
         Member member = new Member(id, name, providerType, accessToken.getTokenValue(), refreshToken.getTokenValue());
         memberRepository.save(member);

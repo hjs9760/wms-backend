@@ -3,8 +3,12 @@ package com.ms.wms.domain;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import javax.lang.model.type.ArrayType;
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -13,6 +17,8 @@ public class Member {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "member_id")
+    @Setter
     private Long id;
 
     @Column
@@ -29,6 +35,9 @@ public class Member {
 
     @Column
     private String refreshToken;
+
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<Routine> routineList = new ArrayList<>();
 
     public Member(String oauthId, String name, String providerName, String accessToken, String refreshToken) {
 

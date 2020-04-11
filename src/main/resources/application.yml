@@ -4,12 +4,25 @@ spring:
     url: jdbc:mysql://localhost:3306/wms?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
     username: root
     password: 1234
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver # mysql 6점대 이상 버전부터는 해당 드라이버를 사용하고 그 이전 드라이버는 cj가 없는 com.mysql.jdbc.Driver를 사용
     initialization-mode: always
   jpa:
     database: mysql
+    open-in-view: false # OSIV(Open Session In View)는 웹 요청이 완료될 때까지 동일한 EntityManager를 갖도록 해줍니다. 스프링부트에서 OSIV가 기본값으로 true (성능과 확장상 면에서 안좋다고 해서 false로 설정)
     hibernate:
-      ddl-auto: create
+      ddl-auto: validate
+        #데이터베이스 초기화 전략을 설정합니다.
+        #none
+          #아무것도 실행하지 않습니다.
+        #create
+          #SessionFactory가 시작될 때 기존테이블을 삭제 후 다시 생성합니다.
+        #create-drop
+          #create와 같으나 SessionFactory가 종료될 때 drop을 실행합니다.
+        #update
+          #변경된 스키마만 반영합니다.
+        #validate
+          #엔티티와 테이블이 정상적으로 매핑되었는지만 확인합니다.
+
     properties:
       hibernate:
         show-sql: true
@@ -18,3 +31,14 @@ spring:
           import_files_sql_extractor: org.hibernate.tool.hbm2ddl.MultipleLinesSqlCommandExtractor
         dialect: org.hibernate.dialect.MySQL55Dialect
     generate-ddl: true
+
+  logging:
+    level:
+      org:
+        hibernate:
+          SQL: DEBUG
+          type:
+            descriptor:  # SQL에서 물음표로 표기된 부분( bind parameter )을 로그로 출력해서 확인
+              sql:
+                BasicBinder: TRACE
+

@@ -24,7 +24,7 @@ public class MyOAuth2Configuration {
 
     @Bean
     public ClientRegistrationRepository clientRegistrationRepository() {
-        final ClientRegistration clientRegistration = CustomOAuthProvider.KAKAO
+        final ClientRegistration clientRegistration = CustomOAuthProvider.NAVER
                 .getBuilder()
                 .build();
 
