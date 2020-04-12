@@ -16,19 +16,16 @@ public class RoutineService {
     //private final ModelMapper modelMapper;
 
     public void saveRoutine(Routine routine) {
-        routineRepository.saveRoutine(routine);
+//        routineRepository.saveRoutine(routine);
     }
 
     public Routine findRoutine(Long id) {
-        Routine routine = routineRepository.findRoutine(id);
-        Member member = routineRepository.findMember(routine.getMember().getId());
-        //Long memberId = member.getId();
-        routine.setMember(member);
+        Routine routine = routineRepository.findById(id).get();
         return routine;
     }
 
     public void removeRoutine(Routine routine) {
-        routineRepository.removeRoutine(routine);
+//        routineRepository.removeRoutine(routine);
     }
 
 }
