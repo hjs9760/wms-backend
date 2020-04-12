@@ -1,6 +1,6 @@
-package com.ms.wms.service;
+package com.ms.wms.domain.member.application;
 
-import com.ms.wms.repository.MemberRepository;
+import com.ms.wms.domain.member.domain.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

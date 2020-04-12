@@ -1,4 +1,4 @@
-package com.ms.wms.dto;
+package com.ms.wms.domain.exercise.controller;
 
 public class ExerciseDto {
 

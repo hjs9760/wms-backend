@@ -1,7 +1,7 @@
-package com.ms.wms.controller;
+package com.ms.wms.domain.exercise.controller;
 
-import com.ms.wms.domain.Exercise;
-import com.ms.wms.service.ExerciseService;
+import com.ms.wms.domain.exercise.domain.Exercise;
+import com.ms.wms.domain.exercise.application.ExerciseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

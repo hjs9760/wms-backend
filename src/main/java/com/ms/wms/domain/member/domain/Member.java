@@ -1,11 +1,11 @@
-package com.ms.wms.domain;
+package com.ms.wms.domain.member.domain;
 
+import com.ms.wms.domain.Routine.domain.Routine;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.lang.model.type.ArrayType;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,6 @@
 //package com.ms.wms.service;
 //
-//import com.ms.wms.domain.Routine;
+//import com.ms.wms.domain.Routine.domain.Routine;
 //import org.junit.jupiter.api.DisplayName;
 //import org.junit.jupiter.api.Test;
 //import org.springframework.beans.factory.annotation.Autowired;

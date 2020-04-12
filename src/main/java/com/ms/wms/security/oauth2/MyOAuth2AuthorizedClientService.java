@@ -1,7 +1,7 @@
 package com.ms.wms.security.oauth2;
 
-import com.ms.wms.domain.Member;
-import com.ms.wms.repository.MemberRepository;
+import com.ms.wms.domain.member.domain.Member;
+import com.ms.wms.domain.member.domain.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
@@ -10,8 +10,6 @@ import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.OAuth2RefreshToken;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
-import java.util.LinkedHashMap;
 
 /**
  * Created by momentjin@gmail.com on 2019-12-11

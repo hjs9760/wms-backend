@@ -1,7 +1,6 @@
-package com.ms.wms.repository;
+package com.ms.wms.domain.Routine.domain;
 
-import com.ms.wms.domain.Member;
-import com.ms.wms.domain.Routine;
+import com.ms.wms.domain.member.domain.Member;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;

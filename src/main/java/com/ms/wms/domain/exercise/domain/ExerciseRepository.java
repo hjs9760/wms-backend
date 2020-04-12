@@ -1,6 +1,5 @@
-package com.ms.wms.repository;
+package com.ms.wms.domain.exercise.domain;
 
-import com.ms.wms.domain.Exercise;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;

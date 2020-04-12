@@ -1,4 +1,4 @@
-package com.ms.wms.controller;
+package com.ms.wms.domain.member.controller;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;

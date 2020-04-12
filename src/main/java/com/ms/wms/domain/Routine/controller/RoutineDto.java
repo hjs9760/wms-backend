@@ -1,7 +1,5 @@
-package com.ms.wms.dto;
+package com.ms.wms.domain.Routine.controller;
 
-import com.ms.wms.domain.Exercise;
-import com.ms.wms.domain.Routine;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -1,8 +1,8 @@
-package com.ms.wms.service;
+package com.ms.wms.domain.Routine.application;
 
-import com.ms.wms.domain.Member;
-import com.ms.wms.domain.Routine;
-import com.ms.wms.repository.RoutineRepository;
+import com.ms.wms.domain.member.domain.Member;
+import com.ms.wms.domain.Routine.domain.Routine;
+import com.ms.wms.domain.Routine.domain.RoutineRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

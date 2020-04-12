@@ -1,9 +1,8 @@
-package com.ms.wms.controller;
+package com.ms.wms.domain.Routine.controller;
 
 
-import com.ms.wms.domain.Routine;
-import com.ms.wms.dto.RoutineDto;
-import com.ms.wms.service.RoutineService;
+import com.ms.wms.domain.Routine.application.RoutineService;
+import com.ms.wms.domain.Routine.domain.Routine;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
