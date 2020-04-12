@@ -13,14 +13,13 @@ import java.util.Map;
 @Getter
 public class NaverOAuth2User implements OAuth2User {
 
-    private String id;
-    private NaverProperties properties;
+    private NaverProperties response;
 
     @Override
     public Map<String, Object> getAttributes() {
         Map<String, Object> attrs = new HashMap<>();
-        attrs.put("id", this.id);
-        attrs.put("name", this.properties.getNickname());
+        attrs.put("id", this.response.getId());
+        attrs.put("name", this.response.getName());
 
         return attrs;
     }
@@ -32,11 +31,12 @@ public class NaverOAuth2User implements OAuth2User {
 
     @Override
     public String getName() {
-        return this.id;
+        return this.response.getId();
     }
 
     @Getter
     public static class NaverProperties {
-        private String nickname;
+        private String id;
+        private String name;
     }
 }

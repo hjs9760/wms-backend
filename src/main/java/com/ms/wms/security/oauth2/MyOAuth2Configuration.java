@@ -7,7 +7,10 @@ import org.springframework.security.oauth2.client.registration.ClientRegistratio
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by momentjin@gmail.com on 2019-12-21
@@ -24,13 +27,20 @@ public class MyOAuth2Configuration {
 
     @Bean
     public ClientRegistrationRepository clientRegistrationRepository() {
-        final ClientRegistration clientRegistration = CustomOAuthProvider.NAVER
-                .getBuilder()
-                .build();
 
-        return new InMemoryClientRegistrationRepository(Collections.singletonList(
-                clientRegistration
-        ));
+        CustomOAuthProvider[] customOAuthProviders = CustomOAuthProvider.values();
+
+        List<ClientRegistration> registrations = new ArrayList<>();
+
+        for (CustomOAuthProvider provider : customOAuthProviders) {
+            ClientRegistration clientRegistration = provider
+                    .getBuilder()
+                    .build();
+
+            registrations.add(clientRegistration);
+        }
+
+        return new InMemoryClientRegistrationRepository(registrations);
     }
 
 }

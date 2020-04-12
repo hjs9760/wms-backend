@@ -21,11 +21,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         /**
          * 로그인 disable 처리
          */
-
         //security.httpBasic().disable();
         http.cors().and();
         http.csrf().disable();
-
 
         // authenticate
         http.authorizeRequests()
