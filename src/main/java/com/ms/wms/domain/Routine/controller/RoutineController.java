@@ -15,19 +15,22 @@ public class RoutineController {
     private final RoutineService routineService;
 
     @PostMapping("/save")
-    public void saveRoutine(@RequestBody Routine routine) {
-        routineService.saveRoutine(routine);
+    public void saveRoutine(@RequestBody SaveRoutineDto saveRoutineDto) {
+        routineService.saveRoutine(saveRoutineDto);
     }
 
-    @PostMapping("/find")
-    public Routine findRoutine(@RequestParam Long id) {
-        return routineService.findRoutine(id);
+    @PostMapping("/update")
+    public void updateRoutine(@RequestBody UpdateRoutineDto updateRoutineDto) {
+        routineService.updateRoutine(updateRoutineDto);
     }
 
-    @PostMapping("/remove")
-    public void removeRoutine(@RequestBody Routine routine) {
-        routineService.removeRoutine(routine);
+    @GetMapping("/find/{routineId}")
+    public FindRoutineDetailDto findRoutine(@PathVariable Long routineId) {
+        return routineService.findRoutine(routineId);
     }
 
-
+    @PostMapping("/{routineId}")
+    public void removeRoutine(@PathVariable Long routineId) {
+        routineService.removeRoutine(routineId);
+    }
 }
