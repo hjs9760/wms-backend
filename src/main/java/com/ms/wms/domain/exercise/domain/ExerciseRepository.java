@@ -1,29 +1,13 @@
 package com.ms.wms.domain.exercise.domain;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import java.util.List;
 
 @Repository
-public class ExerciseRepository {
+public interface ExerciseRepository extends JpaRepository<Exercise, Long> {
 
-    @PersistenceContext
-    private EntityManager em;
-
-    public void saveExercise(Exercise exercise) {
-        if(exercise.getId() == null) {
-            em.persist(exercise);
-        } else {
-            em.merge(exercise);
-        }
-    }
-
-    public Exercise findExercise(Long id) {
-        return em.find(Exercise.class, id);
-    }
-
-    public void removeExercise(Exercise exercise) {
-        em.remove(exercise);
-    }
+    List<Exercise> findByName(String name);
+    List<Exercise> findByNameLike(String name);
 }

@@ -1,13 +1,15 @@
 package com.ms.wms.domain.exercise.domain;
 
-import com.ms.wms.domain.routine_exercise.RoutineExercise;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Getter
@@ -19,9 +21,27 @@ public class Exercise {
     @Column(name = "exercise_id")
     private Long id;
 
+    @Column
+    @NotNull
+    private Long memberId;
+
+    @Setter
+    @Column
+    @NotNull
     private String name;
 
-    @OneToMany(mappedBy = "exercise", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
-    private List<RoutineExercise> routineList = new ArrayList<>();
+    public static Exercise convertSaveExercise(String name, Long memberId) {
+        Exercise exercise = new Exercise();
+        exercise.name = name;
+        exercise.memberId = memberId;
 
+        return exercise;
+    }
+
+    public static Exercise convertUpdateExercise(String name) {
+        Exercise exercise = new Exercise();
+        exercise.name = name;
+
+        return exercise;
+    }
 }
