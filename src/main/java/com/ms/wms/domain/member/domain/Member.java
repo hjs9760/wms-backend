@@ -36,9 +36,6 @@ public class Member {
     @Column
     private String refreshToken;
 
-    @OneToMany(mappedBy = "member", fetch = FetchType.EAGER, orphanRemoval = true)
-    private List<Routine> routineList = new ArrayList<>();
-
     public Member(String oauthId, String name, String providerName, String accessToken, String refreshToken) {
 
         this.oauthId = oauthId;

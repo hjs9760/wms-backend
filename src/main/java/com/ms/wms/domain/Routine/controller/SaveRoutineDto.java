@@ -1,16 +1,15 @@
 package com.ms.wms.domain.Routine.controller;
 
-import com.ms.wms.domain.member.domain.Member;
 import lombok.Getter;
-import lombok.Setter;
+
+import java.util.List;
 
 @Getter
-@Setter
 public class SaveRoutineDto {
 
-    private Long id;
     private String name;
-    private Member member;
+    private Long memberId;
+    private List<SaveRoutineExerciseDto> saveRoutineExerciseDtoList;
 
 
 }

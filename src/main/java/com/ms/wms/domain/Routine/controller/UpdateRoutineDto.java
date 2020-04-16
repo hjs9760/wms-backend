@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class UpdateRoutineDto {
 
-    private Long id;
+    private Long routineId;
     private String name;
 
 }
