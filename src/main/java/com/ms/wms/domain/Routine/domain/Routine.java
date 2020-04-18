@@ -1,7 +1,6 @@
 package com.ms.wms.domain.Routine.domain;
 
-import com.ms.wms.domain.Routine.controller.SaveRoutineExerciseDto;
-import com.ms.wms.domain.Routine.controller.UpdateRoutineDto;
+import com.ms.wms.domain.Routine.controller.dto.SaveRoutineExerciseDto;
 import com.ms.wms.domain.exercise.domain.Exercise;
 import com.ms.wms.domain.routine_exercise.RoutineExercise;
 import lombok.AccessLevel;
@@ -33,7 +32,7 @@ public class Routine {
     @OneToMany(mappedBy = "routine", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<RoutineExercise> routineExerciseList = new ArrayList<>();
 
-    public static Routine createSaveRoutine(String name, Long memberId) {
+    public static Routine createRoutine(String name, Long memberId) {
         Routine routine = new Routine();
         routine.name = name;
         routine.memberId = memberId;
@@ -41,15 +40,15 @@ public class Routine {
         return routine;
     }
 
-    public static Routine convertUpdateRoutine(Routine routine, UpdateRoutineDto updateRoutineDto) {
-        routine.setName(updateRoutineDto.getName());
-
-        return routine;
-    }
-
     public void addExerciseInfo(Exercise exercise, SaveRoutineExerciseDto saveRoutineExerciseDto) {
         this.routineExerciseList.add(RoutineExercise.createSaveRoutineExercise(this, exercise, saveRoutineExerciseDto.getExerciseSet()
                                                             , saveRoutineExerciseDto.getCount(), saveRoutineExerciseDto.getWeight()));
+    }
+
+    public void updateRoutineInfo(String name, List<RoutineExercise> routineExercises) {
+        this.name = name;
+        this.routineExerciseList.clear();
+        this.routineExerciseList.addAll(routineExercises);
     }
 }
 

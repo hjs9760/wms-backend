@@ -5,6 +5,7 @@ import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 public class FindExerciseDetailDto {
@@ -23,12 +24,10 @@ public class FindExerciseDetailDto {
     }
 
     public static List<FindExerciseDetailDto> convertFindListExerciseDetailDto(List<Exercise> exerciseList) {
-        List<FindExerciseDetailDto> findExerciseDetailDtoList = new ArrayList<>();
-        for(Exercise exercise : exerciseList) {
-            findExerciseDetailDtoList.add(new FindExerciseDetailDto(exercise.getId(), exercise.getName()));
-        }
 
-        return findExerciseDetailDtoList;
+        return exerciseList.stream()
+                .map(exercise -> new FindExerciseDetailDto(exercise.getId(), exercise.getName()))
+                .collect(Collectors.toList());
     }
 
 }

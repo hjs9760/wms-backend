@@ -41,7 +41,8 @@ public class ExerciseService {
 
     @Transactional
     public void updateExercise(UpdateExerciseDto updateExerciseDto) {
-        Exercise exercise = exerciseRepository.findById(updateExerciseDto.getExerciseId()).get();
+        Exercise exercise = exerciseRepository.findById(updateExerciseDto.getExerciseId())
+                .orElseThrow(() -> new RuntimeException("조회된 exercise가 없습니다."));
         exercise.setName(updateExerciseDto.getName());
     }
 

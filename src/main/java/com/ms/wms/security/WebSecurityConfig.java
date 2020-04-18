@@ -1,6 +1,7 @@
 package com.ms.wms.security;
 
 import com.ms.wms.security.oauth2.MyAuthenticationSuccessHandler;
+import com.ms.wms.security.oauth2.custom.GoogleOAuth2User;
 import com.ms.wms.security.oauth2.custom.KakaoOAuth2User;
 import com.ms.wms.security.oauth2.custom.NaverOAuth2User;
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package com.ms.wms.domain.Routine.controller;
+package com.ms.wms.domain.Routine.controller.dto;
 
 import lombok.Getter;
 

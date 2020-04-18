@@ -1,4 +1,4 @@
-package com.ms.wms.domain.Routine.controller;
+package com.ms.wms.domain.Routine.controller.dto;
 
 import lombok.Getter;
 
@@ -7,9 +7,9 @@ public class FindExerciseDetailInfo {
 
     private Long exerciseId;
     private String name;
-    private int count;
-    private int weight;
-    private int exerciseSet;
+    private Integer count;
+    private Integer weight;
+    private Integer exerciseSet;
 
     public static FindExerciseDetailInfo createFindExerciseDetailInfo(Long exerciseId, String name, int count, int weight, int exerciseSet) {
         FindExerciseDetailInfo findExerciseDetailInfo = new FindExerciseDetailInfo();

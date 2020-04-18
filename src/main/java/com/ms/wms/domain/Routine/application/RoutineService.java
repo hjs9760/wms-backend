@@ -1,6 +1,6 @@
 package com.ms.wms.domain.Routine.application;
 
-import com.ms.wms.domain.Routine.controller.*;
+import com.ms.wms.domain.Routine.controller.dto.*;
 import com.ms.wms.domain.Routine.domain.Routine;
 import com.ms.wms.domain.Routine.domain.RoutineRepository;
 import com.ms.wms.domain.exercise.domain.Exercise;
@@ -22,7 +22,7 @@ public class RoutineService {
 
     public void saveRoutine(SaveRoutineDto saveRoutineDto) {
 
-        Routine routine = Routine.createSaveRoutine(saveRoutineDto.getName(), saveRoutineDto.getMemberId());
+        Routine routine = Routine.createRoutine(saveRoutineDto.getName(), saveRoutineDto.getMemberId());
 
         for (SaveRoutineExerciseDto saveRoutineExerciseDto : saveRoutineDto.getSaveRoutineExerciseDtoList()) {
             Exercise exercise = exerciseRepository.findById(saveRoutineExerciseDto.getExerciseId()).get();
@@ -35,9 +35,24 @@ public class RoutineService {
 
     @Transactional
     public void updateRoutine(UpdateRoutineDto updateRoutineDto) {
-        Routine routine = routineRepository.findById(updateRoutineDto.getRoutineId()).get();
-        routine.setName(updateRoutineDto.getName());
+
+        Routine routine = routineRepository.findById(updateRoutineDto.getRoutineId())
+                .orElseThrow(() -> new RuntimeException("존재하지 않는 routine 입니다."));
+
+        List<SaveRoutineExerciseDto> dtos = updateRoutineDto.getSaveRoutineExerciseDtoList();
+        List<RoutineExercise> routineExerciseList = new ArrayList<>();
+        for (SaveRoutineExerciseDto dto  : dtos) {
+            Exercise exercise = exerciseRepository.findById(dto.getExerciseId()).
+                    orElseThrow(() -> new RuntimeException("존재하지 않는 exercise 입니다."));
+
+            RoutineExercise routineExercise = RoutineExercise.createSaveRoutineExercise(routine, exercise, dto.getExerciseSet(), dto.getCount(), dto.getWeight());
+            routineExerciseList.add(routineExercise);
+        }
+
+        routine.updateRoutineInfo(updateRoutineDto.getName(), routineExerciseList);
     }
+
+
 
     public FindRoutineDetailDto findRoutine(Long routineId) {
         Routine routine = routineRepository.findById(routineId).get();

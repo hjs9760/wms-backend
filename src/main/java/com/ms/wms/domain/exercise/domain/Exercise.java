@@ -37,11 +37,4 @@ public class Exercise {
 
         return exercise;
     }
-
-    public static Exercise convertUpdateExercise(String name) {
-        Exercise exercise = new Exercise();
-        exercise.name = name;
-
-        return exercise;
-    }
 }

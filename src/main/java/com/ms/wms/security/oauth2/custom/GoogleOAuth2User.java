@@ -23,7 +23,6 @@ public class GoogleOAuth2User implements OAuth2User {
         return attrs;
     }
 
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singleton(new OAuth2UserAuthority(getAttributes()));
