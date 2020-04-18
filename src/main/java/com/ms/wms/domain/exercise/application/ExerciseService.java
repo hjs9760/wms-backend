@@ -18,22 +18,28 @@ public class ExerciseService {
     private final ExerciseRepository exerciseRepository;
 
     public void saveExercise(SaveExerciseDto exerciseDto) {
-        if(exerciseRepository.findByName(exerciseDto.getName()).size() >= 1) {
-            System.out.println("중복이요");
-        } else {
-            Exercise exercise = Exercise.convertSaveExercise(exerciseDto.getName(), exerciseDto.getMemberId());
-            exerciseRepository.save(exercise);
+
+        List<Exercise> exercises = exerciseRepository.findByName(exerciseDto.getName());
+        if (exercises.size() >= 1) {
+            throw new RuntimeException("이미 중복된 exercise 이름입니다.");
         }
+
+
+        Exercise exercise = Exercise.convertSaveExercise(exerciseDto.getName(), exerciseDto.getMemberId());
+        exerciseRepository.save(exercise);
     }
 
     public FindExerciseDetailDto findExerciseById(Long id) {
-        Exercise exercise = exerciseRepository.findById(id).get();
-        FindExerciseDetailDto findExerciseDetailDto = FindExerciseDetailDto.convertFindExerciseDetailDto(exercise.getId(), exercise.getName());
 
+        Exercise exercise = exerciseRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("존재하지 않는 exercise입니다."));
+
+        FindExerciseDetailDto findExerciseDetailDto = FindExerciseDetailDto.create(exercise.getId(), exercise.getName());
         return findExerciseDetailDto;
     }
 
     public List<FindExerciseDetailDto> findExerciseByName(String name) {
+
         List<Exercise> exerciseList = exerciseRepository.findByNameLike("%" + name + "%");
         List<FindExerciseDetailDto> findExerciseDetailDtoList = FindExerciseDetailDto.convertFindListExerciseDetailDto(exerciseList);
         return findExerciseDetailDtoList;
@@ -41,7 +47,10 @@ public class ExerciseService {
 
     @Transactional
     public void updateExercise(UpdateExerciseDto updateExerciseDto) {
-        Exercise exercise = exerciseRepository.findById(updateExerciseDto.getExerciseId()).get();
+
+        Exercise exercise = exerciseRepository.findById(updateExerciseDto.getExerciseId())
+                .orElseThrow(() -> new RuntimeException("존재하지 않는 exercise입니다."));
+
         exercise.setName(updateExerciseDto.getName());
     }
 

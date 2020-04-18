@@ -1,7 +1,7 @@
 package com.ms.wms.domain.Routine.domain;
 
-import com.ms.wms.domain.Routine.controller.SaveRoutineExerciseDto;
-import com.ms.wms.domain.Routine.controller.UpdateRoutineDto;
+import com.ms.wms.domain.Routine.controller.dto.SaveRoutineExerciseDto;
+import com.ms.wms.domain.Routine.controller.dto.UpdateRoutineDto;
 import com.ms.wms.domain.exercise.domain.Exercise;
 import com.ms.wms.domain.routine_exercise.RoutineExercise;
 import lombok.AccessLevel;
@@ -33,7 +33,7 @@ public class Routine {
     @OneToMany(mappedBy = "routine", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<RoutineExercise> routineExerciseList = new ArrayList<>();
 
-    public static Routine createSaveRoutine(String name, Long memberId) {
+    public static Routine createRoutine(String name, Long memberId) {
         Routine routine = new Routine();
         routine.name = name;
         routine.memberId = memberId;
