@@ -6,6 +6,7 @@ import com.ms.wms.domain.Routine.controller.dto.FindRoutineDetailDto;
 import com.ms.wms.domain.Routine.controller.dto.SaveRoutineDto;
 import com.ms.wms.domain.Routine.controller.dto.UpdateRoutineDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -17,22 +18,22 @@ public class RoutineController {
     private final RoutineService routineService;
 
     @PostMapping("/save")
-    public void saveRoutine(@RequestBody SaveRoutineDto saveRoutineDto) {
-        routineService.saveRoutine(saveRoutineDto);
+    public void saveRoutine(@AuthenticationPrincipal Long memberId, @RequestBody SaveRoutineDto saveRoutineDto) {
+        routineService.saveRoutine(memberId, saveRoutineDto);
     }
 
     @PostMapping("/update")
-    public void updateRoutine(@RequestBody UpdateRoutineDto updateRoutineDto) {
-        routineService.updateRoutine(updateRoutineDto);
+    public void updateRoutine(@AuthenticationPrincipal Long memberId, @RequestBody UpdateRoutineDto updateRoutineDto) {
+        routineService.updateRoutine(memberId, updateRoutineDto);
     }
 
     @GetMapping("/find/{routineId}")
-    public FindRoutineDetailDto findRoutine(@PathVariable Long routineId) {
-        return routineService.findRoutine(routineId);
+    public FindRoutineDetailDto findRoutine(@AuthenticationPrincipal Long memberId, @PathVariable Long routineId) {
+        return routineService.findRoutine(memberId, routineId);
     }
 
     @PostMapping("/{routineId}")
-    public void removeRoutine(@PathVariable Long routineId) {
-        routineService.removeRoutine(routineId);
+    public void removeRoutine(@AuthenticationPrincipal Long memberId, @PathVariable Long routineId) {
+        routineService.removeRoutine(memberId, routineId);
     }
 }

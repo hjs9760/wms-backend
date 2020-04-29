@@ -5,11 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.validation.constraints.NotNull;
+import javax.persistence.*;
 
 @Entity
 @Getter
@@ -17,23 +13,27 @@ import javax.validation.constraints.NotNull;
 public class Exercise {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "exercise_id")
     private Long id;
 
     @Column
-    @NotNull
     private Long memberId;
+
+    @Enumerated(EnumType.STRING)
+    @Column
+    @Setter
+    private Category category;
 
     @Setter
     @Column
-    @NotNull
     private String name;
 
-    public static Exercise convertSaveExercise(String name, Long memberId) {
+    public static Exercise convertSaveExercise(String name, Long memberId, Category category) {
         Exercise exercise = new Exercise();
         exercise.name = name;
         exercise.memberId = memberId;
+        exercise.category = category;
 
         return exercise;
     }

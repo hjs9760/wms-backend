@@ -2,14 +2,14 @@ package com.ms.wms.security.oauth2;
 
 import com.ms.wms.domain.member.domain.Member;
 import com.ms.wms.domain.member.domain.MemberRepository;
+import com.ms.wms.security.oauth2.custom.MyOAuth2User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.OAuth2RefreshToken;
-import org.springframework.security.oauth2.core.user.OAuth2User;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
 
 /**
  * Created by momentjin@gmail.com on 2019-12-11
@@ -27,22 +27,24 @@ public class MyOAuth2AuthorizedClientService implements OAuth2AuthorizedClientSe
         OAuth2AccessToken accessToken = oAuth2AuthorizedClient.getAccessToken();
         OAuth2RefreshToken refreshToken = oAuth2AuthorizedClient.getRefreshToken();
 
-        OAuth2User oauth2User = (OAuth2User) authentication.getPrincipal();
+        MyOAuth2User oauth2User = (MyOAuth2User) authentication.getPrincipal();
         String id = oauth2User.getName();
         String name = oauth2User.getAttribute("name");
 
         Member member = new Member(id, name, providerType, accessToken.getTokenValue(), refreshToken.getTokenValue());
         memberRepository.save(member);
+
+        oauth2User.dbPK  = member.getId();
     }
 
     @Override
     public <T extends OAuth2AuthorizedClient> T loadAuthorizedClient(String s, String s1) {
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException(); // 아직 구현되지음 않음
     }
 
     @Override
     public void removeAuthorizedClient(String s, String s1) {
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException(); // 아직 구현되지 않음
     }
 
 }

@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Getter
-public class NaverOAuth2User implements OAuth2User {
+public class NaverOAuth2User extends MyOAuth2User {
 
     private NaverProperties response;
 

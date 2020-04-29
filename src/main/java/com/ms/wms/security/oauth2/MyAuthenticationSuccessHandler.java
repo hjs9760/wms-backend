@@ -1,6 +1,10 @@
 package com.ms.wms.security.oauth2;
 
+import com.ms.wms.security.jwt.WmsJWTGenerator;
+import com.ms.wms.security.oauth2.custom.MyOAuth2User;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 import javax.servlet.ServletException;
@@ -12,6 +16,16 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-        response.setStatus(777);
+
+        MyOAuth2User oAuth2User = (MyOAuth2User) authentication.getPrincipal();
+
+        Long oauth2UserId = Long.parseLong(oAuth2User.getName());
+
+        String jwt = WmsJWTGenerator.generate(oAuth2User.dbPK);
+
+        response.setStatus(200);
+        response.getWriter().write(jwt);
+        response.getWriter().flush();
+        response.getWriter().close();
     }
 }

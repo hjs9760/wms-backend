@@ -1,6 +1,7 @@
 package com.ms.wms.security.oauth2.custom;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2UserAuthority;
@@ -11,14 +12,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Getter
-public class KakaoOAuth2User implements OAuth2User {
+public class KakaoOAuth2User extends MyOAuth2User {
 
     private String id;
     private KakaoProperties properties;
 
     @Override
     public Map<String, Object> getAttributes() {
+
         Map<String, Object> attrs = new HashMap<>();
+
         attrs.put("id", this.id);
         attrs.put("name", this.properties.getNickname());
 
@@ -39,4 +42,6 @@ public class KakaoOAuth2User implements OAuth2User {
     private static class KakaoProperties {
         private String nickname;
     }
+
+
 }

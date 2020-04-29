@@ -1,5 +1,6 @@
 package com.ms.wms.domain.Routine.controller.dto;
 
+import com.ms.wms.domain.exercise.domain.Category;
 import lombok.Getter;
 
 @Getter
@@ -7,14 +8,16 @@ public class FindExerciseDetailInfo {
 
     private Long exerciseId;
     private String name;
+    private Category category;
     private Integer count;
-    private Integer weight;
+    private Double weight;
     private Integer exerciseSet;
 
-    public static FindExerciseDetailInfo createFindExerciseDetailInfo(Long exerciseId, String name, int count, int weight, int exerciseSet) {
+    public static FindExerciseDetailInfo createFindExerciseDetailInfo(Long exerciseId, String name, Category category, int count, Double weight, int exerciseSet) {
         FindExerciseDetailInfo findExerciseDetailInfo = new FindExerciseDetailInfo();
-        findExerciseDetailInfo.exerciseId = exerciseId;;
+        findExerciseDetailInfo.exerciseId = exerciseId;
         findExerciseDetailInfo.name = name;
+        findExerciseDetailInfo.category = category;
         findExerciseDetailInfo.count = count;
         findExerciseDetailInfo.weight = weight;
         findExerciseDetailInfo.exerciseSet = exerciseSet;

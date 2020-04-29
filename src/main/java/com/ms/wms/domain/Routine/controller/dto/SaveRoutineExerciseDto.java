@@ -7,6 +7,6 @@ public class SaveRoutineExerciseDto {
 
     private Long exerciseId;
     private Integer count;
-    private Integer weight;
+    private Double weight;
     private Integer exerciseSet;
 }

@@ -20,30 +20,37 @@ public class RoutineService {
     private final RoutineRepository routineRepository;
     private final ExerciseRepository exerciseRepository;
 
-    public void saveRoutine(SaveRoutineDto saveRoutineDto) {
+    public void saveRoutine(Long memberId, SaveRoutineDto saveRoutineDto) {
 
-        Routine routine = Routine.createRoutine(saveRoutineDto.getName(), saveRoutineDto.getMemberId());
+        Routine routine = Routine.createRoutine(saveRoutineDto.getName(), memberId);
 
-        for (SaveRoutineExerciseDto saveRoutineExerciseDto : saveRoutineDto.getSaveRoutineExerciseDtoList()) {
-            Exercise exercise = exerciseRepository.findById(saveRoutineExerciseDto.getExerciseId()).get();
+        for (SaveRoutineExerciseDto dto : saveRoutineDto.getSaveRoutineExerciseDtoList()) {
+            Exercise exercise = exerciseRepository.findByIdAndMemberId(dto.getExerciseId(), memberId);
 
-            routine.addExerciseInfo(exercise, saveRoutineExerciseDto);
+            if(!memberId.equals(exercise.getMemberId())) {
+                throw new RuntimeException("no permission");
+            }
+
+            routine.addExerciseInfo(exercise, dto);
+
         }
 
         routineRepository.save(routine);
     }
 
     @Transactional
-    public void updateRoutine(UpdateRoutineDto updateRoutineDto) {
+    public void updateRoutine(Long memberId, UpdateRoutineDto updateRoutineDto) {
 
-        Routine routine = routineRepository.findById(updateRoutineDto.getRoutineId())
-                .orElseThrow(() -> new RuntimeException("존재하지 않는 routine 입니다."));
+        Routine routine = routineRepository.findByIdAndMemberId(updateRoutineDto.getRoutineId(), memberId);
 
-        List<SaveRoutineExerciseDto> dtos = updateRoutineDto.getSaveRoutineExerciseDtoList();
+        List<SaveRoutineExerciseDto> dtoList = updateRoutineDto.getSaveRoutineExerciseDtoList();
         List<RoutineExercise> routineExerciseList = new ArrayList<>();
-        for (SaveRoutineExerciseDto dto  : dtos) {
-            Exercise exercise = exerciseRepository.findById(dto.getExerciseId()).
-                    orElseThrow(() -> new RuntimeException("존재하지 않는 exercise 입니다."));
+        for (SaveRoutineExerciseDto dto  : dtoList) {
+            Exercise exercise = exerciseRepository.findByIdAndMemberId(dto.getExerciseId(), memberId);
+
+            if(!memberId.equals(exercise.getMemberId())) {
+                throw new RuntimeException(("no permission"));
+            }
 
             RoutineExercise routineExercise = RoutineExercise.createSaveRoutineExercise(routine, exercise, dto.getExerciseSet(), dto.getCount(), dto.getWeight());
             routineExerciseList.add(routineExercise);
@@ -52,10 +59,12 @@ public class RoutineService {
         routine.updateRoutineInfo(updateRoutineDto.getName(), routineExerciseList);
     }
 
+    public FindRoutineDetailDto findRoutine(Long memberId, Long routineId) {
+        Routine routine = routineRepository.findByIdAndMemberId(routineId, memberId);
 
-
-    public FindRoutineDetailDto findRoutine(Long routineId) {
-        Routine routine = routineRepository.findById(routineId).get();
+        if(!memberId.equals(routine.getMemberId())) {
+            throw new RuntimeException("no permission");
+        }
         List<RoutineExercise> routineExerciseList = routine.getRoutineExerciseList();
 
         List<FindExerciseDetailInfo> findExerciseDetailInfoList = new ArrayList<>();
@@ -63,6 +72,7 @@ public class RoutineService {
         for(RoutineExercise routineExercise : routineExerciseList) {
             FindExerciseDetailInfo findExerciseDetailInfo = FindExerciseDetailInfo.createFindExerciseDetailInfo(routineExercise.getExercise().getId()
                                                                                         , routineExercise.getExercise().getName()
+                                                                                        , routineExercise.getExercise().getCategory()
                                                                                         , routineExercise.getCount()
                                                                                         , routineExercise.getWeight()
                                                                                         , routineExercise.getExerciseSet());
@@ -72,8 +82,8 @@ public class RoutineService {
         return FindRoutineDetailDto.resultRoutineDto(routine.getId(), routine.getName(), findExerciseDetailInfoList);
     }
 
-    public void removeRoutine(Long routineId) {
-        routineRepository.deleteById(routineId);
+    public void removeRoutine(Long memberId, Long routineId) {
+        routineRepository.deleteByIdAndMemberId(routineId, memberId);
     }
 
 }
