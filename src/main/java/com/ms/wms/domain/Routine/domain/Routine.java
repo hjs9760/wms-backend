@@ -41,6 +41,7 @@ public class Routine {
         return routine;
     }
 
+    // todo :  불필요한 메소드 제거
     public static Routine convertUpdateRoutine(Routine routine, UpdateRoutineDto updateRoutineDto) {
         routine.setName(updateRoutineDto.getName());
 
@@ -48,8 +49,20 @@ public class Routine {
     }
 
     public void addExerciseInfo(Exercise exercise, SaveRoutineExerciseDto saveRoutineExerciseDto) {
+
+        // todo: 딱 봐도 코드 읽기가 어려움 (아래 주석 달아놓은 것처럼 만들면 한눈에 들어와서 읽기 편함)
         this.routineExerciseList.add(RoutineExercise.createSaveRoutineExercise(this, exercise, saveRoutineExerciseDto.getExerciseSet()
-                                                            , saveRoutineExerciseDto.getCount(), saveRoutineExerciseDto.getWeight()));
+                , saveRoutineExerciseDto.getCount(), saveRoutineExerciseDto.getWeight()));
+
+
+//        RoutineExercise routineExercise = RoutineExercise.createSaveRoutineExercise(
+//                this,
+//                exercise,
+//                saveRoutineExerciseDto.getExerciseSet()
+//                , saveRoutineExerciseDto.getCount(),
+//                saveRoutineExerciseDto.getWeight());
+//
+//        this.routineExerciseList.add(routineExercise);
     }
 }
 

@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -40,7 +41,7 @@ public class RoutineService {
     @Transactional
     public void updateRoutine(UpdateRoutineDto updateRoutineDto) {
 
-        // todo ; orElseThrow하기
+        // todo : orElseThrow하기
         Routine routine = routineRepository.findById(updateRoutineDto.getRoutineId()).get();
 
         // todo : 루틴 안의 운동 수정 로직 추가하기

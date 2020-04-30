@@ -10,6 +10,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+// todo : 구글 안쓰지 않나. 제거해도 될듯?
 public class GoogleOAuth2User implements OAuth2User {
     private String id;
     private GoogleProperties properties;
