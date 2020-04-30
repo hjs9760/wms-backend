@@ -1,8 +1,8 @@
-package com.ms.wms.security.oauth2;
+package com.ms.wms.global.config.security.oauth2;
 
 import com.ms.wms.domain.member.domain.Member;
 import com.ms.wms.domain.member.domain.MemberRepository;
-import com.ms.wms.security.oauth2.custom.MyOAuth2User;
+import com.ms.wms.global.config.security.oauth2.custom.MyOAuth2User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;

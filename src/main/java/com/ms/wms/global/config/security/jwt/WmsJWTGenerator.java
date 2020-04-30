@@ -1,4 +1,4 @@
-package com.ms.wms.security.jwt;
+package com.ms.wms.global.config.security.jwt;
 
 import com.auth0.jwt.interfaces.Claim;
 import com.ms.wms.domain.member.domain.Member;

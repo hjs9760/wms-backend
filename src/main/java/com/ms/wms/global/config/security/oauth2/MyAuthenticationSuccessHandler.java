@@ -1,10 +1,8 @@
-package com.ms.wms.security.oauth2;
+package com.ms.wms.global.config.security.oauth2;
 
-import com.ms.wms.security.jwt.WmsJWTGenerator;
-import com.ms.wms.security.oauth2.custom.MyOAuth2User;
+import com.ms.wms.global.config.security.jwt.WmsJWTGenerator;
+import com.ms.wms.global.config.security.oauth2.custom.MyOAuth2User;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 import javax.servlet.ServletException;

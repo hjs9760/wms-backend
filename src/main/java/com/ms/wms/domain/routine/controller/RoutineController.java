@@ -1,10 +1,10 @@
-package com.ms.wms.domain.Routine.controller;
+package com.ms.wms.domain.routine.controller;
 
 
-import com.ms.wms.domain.Routine.application.RoutineService;
-import com.ms.wms.domain.Routine.controller.dto.FindRoutineDetailDto;
-import com.ms.wms.domain.Routine.controller.dto.SaveRoutineDto;
-import com.ms.wms.domain.Routine.controller.dto.UpdateRoutineDto;
+import com.ms.wms.domain.routine.application.RoutineService;
+import com.ms.wms.domain.routine.controller.dto.FindRoutineDetailDto;
+import com.ms.wms.domain.routine.controller.dto.SaveRoutineDto;
+import com.ms.wms.domain.routine.controller.dto.UpdateRoutineDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;

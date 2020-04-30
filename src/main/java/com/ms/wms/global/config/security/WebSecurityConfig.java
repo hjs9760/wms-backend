@@ -1,9 +1,8 @@
-package com.ms.wms.security;
+package com.ms.wms.global.config.security;
 
-import com.ms.wms.security.oauth2.MyAuthenticationSuccessHandler;
-import com.ms.wms.security.oauth2.custom.GoogleOAuth2User;
-import com.ms.wms.security.oauth2.custom.KakaoOAuth2User;
-import com.ms.wms.security.oauth2.custom.NaverOAuth2User;
+import com.ms.wms.global.config.security.oauth2.MyAuthenticationSuccessHandler;
+import com.ms.wms.global.config.security.oauth2.custom.KakaoOAuth2User;
+import com.ms.wms.global.config.security.oauth2.custom.NaverOAuth2User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

@@ -1,4 +1,4 @@
-package com.ms.wms.domain.Routine.controller.dto;
+package com.ms.wms.domain.routine.controller.dto;
 
 import com.ms.wms.domain.exercise.domain.Category;
 import lombok.Getter;

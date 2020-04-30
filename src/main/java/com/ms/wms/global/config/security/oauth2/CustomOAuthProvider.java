@@ -1,4 +1,4 @@
-package com.ms.wms.security.oauth2;
+package com.ms.wms.global.config.security.oauth2;
 
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;

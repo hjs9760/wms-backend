@@ -1,6 +1,6 @@
 //package com.ms.wms.service;
 //
-//import com.ms.wms.domain.Routine.domain.Routine;
+//import com.ms.wms.domain.routine.domain.routine;
 //import org.junit.jupiter.api.DisplayName;
 //import org.junit.jupiter.api.Test;
 //import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@
 //    @DisplayName("루틴 등록")
 //    public void save() throws Exception {
 //        //given
-//        Routine routine = new Routine();
+//        routine routine = new routine();
 //
 //
 //        //when

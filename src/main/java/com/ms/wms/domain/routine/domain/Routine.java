@@ -1,6 +1,6 @@
-package com.ms.wms.domain.Routine.domain;
+package com.ms.wms.domain.routine.domain;
 
-import com.ms.wms.domain.Routine.controller.dto.SaveRoutineExerciseDto;
+import com.ms.wms.domain.routine.controller.dto.SaveRoutineExerciseDto;
 import com.ms.wms.domain.exercise.domain.Exercise;
 import com.ms.wms.domain.routine_exercise.RoutineExercise;
 import lombok.AccessLevel;

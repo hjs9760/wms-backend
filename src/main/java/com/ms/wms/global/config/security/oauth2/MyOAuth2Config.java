@@ -1,4 +1,4 @@
-package com.ms.wms.security.oauth2;
+package com.ms.wms.global.config.security.oauth2;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,8 +8,6 @@ import org.springframework.security.oauth2.client.registration.ClientRegistratio
 import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -18,7 +16,7 @@ import java.util.List;
  */
 
 @Configuration
-public class MyOAuth2Configuration {
+public class MyOAuth2Config {
 
     @Bean
     public OAuth2AuthorizedClientService authorizedClientService() {

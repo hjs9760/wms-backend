@@ -1,8 +1,7 @@
-package com.ms.wms.security.oauth2.custom;
+package com.ms.wms.global.config.security.oauth2.custom;
 
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2UserAuthority;
 
 import java.util.Collection;

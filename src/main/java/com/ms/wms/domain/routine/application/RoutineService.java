@@ -1,8 +1,8 @@
-package com.ms.wms.domain.Routine.application;
+package com.ms.wms.domain.routine.application;
 
-import com.ms.wms.domain.Routine.controller.dto.*;
-import com.ms.wms.domain.Routine.domain.Routine;
-import com.ms.wms.domain.Routine.domain.RoutineRepository;
+import com.ms.wms.domain.routine.controller.dto.*;
+import com.ms.wms.domain.routine.domain.Routine;
+import com.ms.wms.domain.routine.domain.RoutineRepository;
 import com.ms.wms.domain.exercise.domain.Exercise;
 import com.ms.wms.domain.exercise.domain.ExerciseRepository;
 import com.ms.wms.domain.routine_exercise.RoutineExercise;

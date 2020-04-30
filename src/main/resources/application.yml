@@ -3,7 +3,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/wms?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
     username: root
-    password: 1234
+    password:
     driver-class-name: com.mysql.cj.jdbc.Driver # mysql 6점대 이상 버전부터는 해당 드라이버를 사용하고 그 이전 드라이버는 cj가 없는 com.mysql.jdbc.Driver를 사용
     initialization-mode: always
   jpa:
