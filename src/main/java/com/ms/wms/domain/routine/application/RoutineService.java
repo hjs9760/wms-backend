@@ -5,7 +5,7 @@ import com.ms.wms.domain.routine.domain.Routine;
 import com.ms.wms.domain.routine.domain.RoutineRepository;
 import com.ms.wms.domain.exercise.domain.Exercise;
 import com.ms.wms.domain.exercise.domain.ExerciseRepository;
-import com.ms.wms.domain.routine_exercise.RoutineExercise;
+import com.ms.wms.domain.routine.domain.RoutineExercise;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

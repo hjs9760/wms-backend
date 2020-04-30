@@ -1,6 +1,5 @@
-package com.ms.wms.domain.routine_exercise;
+package com.ms.wms.domain.routine.domain;
 
-import com.ms.wms.domain.routine.domain.Routine;
 import com.ms.wms.domain.exercise.domain.Exercise;
 import lombok.AccessLevel;
 import lombok.Getter;
