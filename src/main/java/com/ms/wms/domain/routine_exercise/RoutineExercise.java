@@ -27,16 +27,16 @@ public class RoutineExercise {
     private Exercise exercise;
 
     @Column
-    private int count;
+    private Integer count;
 
     @Column
-    private int weight;
+    private Double weight;
 
     @Column
-    private int exerciseSet;
+    private Integer exerciseSet;
 
     // todo : 메소드 이름 중 save라는 건 필요 없다. 객체를 생성한다는 뜻만 있어도 충분. 이 객체를 save하려고 만드는지를 RoutineExercise 클래스가 왜 알아야함?
-    public static RoutineExercise createSaveRoutineExercise(Routine routine, Exercise exercise, int exerciseSet, int count, int weight) {
+    public static RoutineExercise createRoutineExercise(Routine routine, Exercise exercise, int exerciseSet, int count, double weight) {
         RoutineExercise routineExercise = new RoutineExercise();
         routineExercise.routine = routine;
         routineExercise.exercise = exercise;

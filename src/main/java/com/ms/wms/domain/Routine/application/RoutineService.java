@@ -1,10 +1,7 @@
 package com.ms.wms.domain.Routine.application;
 
-import com.ms.wms.domain.Routine.controller.*;
-import com.ms.wms.domain.Routine.controller.dto.FindRoutineDetailDto;
-import com.ms.wms.domain.Routine.controller.dto.SaveRoutineDto;
-import com.ms.wms.domain.Routine.controller.dto.SaveRoutineExerciseDto;
-import com.ms.wms.domain.Routine.controller.dto.UpdateRoutineDto;
+import com.ms.wms.domain.Routine.controller.FindExerciseDetailInfoDto;
+import com.ms.wms.domain.Routine.controller.dto.*;
 import com.ms.wms.domain.Routine.domain.Routine;
 import com.ms.wms.domain.Routine.domain.RoutineRepository;
 import com.ms.wms.domain.exercise.domain.Exercise;
@@ -16,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -29,7 +25,7 @@ public class RoutineService {
 
         Routine routine = Routine.createRoutine(saveRoutineDto.getName(), saveRoutineDto.getMemberId());
 
-        for (SaveRoutineExerciseDto saveRoutineExerciseDto : saveRoutineDto.getSaveRoutineExerciseDtoList()) {
+        for (SaveRoutineExerciseDto saveRoutineExerciseDto : saveRoutineDto.getRoutineExerciseList()) {
             Exercise exercise = exerciseRepository.findById(saveRoutineExerciseDto.getExerciseId()).get();
 
             routine.addExerciseInfo(exercise, saveRoutineExerciseDto);
@@ -42,16 +38,19 @@ public class RoutineService {
     public void updateRoutine(UpdateRoutineDto updateRoutineDto) {
 
         // todo : orElseThrow하기
-        Routine routine = routineRepository.findById(updateRoutineDto.getRoutineId()).get();
+        Routine routine = routineRepository.findById(updateRoutineDto.getRoutineId())
+                .orElseThrow(()-> new RuntimeException("존재하지 않는 routine 입니다."));
 
-        // todo : 루틴 안의 운동 수정 로직 추가하기
+        // todo : 루틴 안의 운동 수정 로직 추가하기 -> master에 되어있는데 ?
         routine.setName(updateRoutineDto.getName());
+
     }
 
     public FindRoutineDetailDto findRoutine(Long routineId) {
 
         // todo ; orElseThrow하기
-        Routine routine = routineRepository.findById(routineId).get();
+        Routine routine = routineRepository.findById(routineId)
+                .orElseThrow(() -> new RuntimeException(("존재하지 않는 routine 입니다.")));
 
         List<RoutineExercise> routineExerciseList = routine.getRoutineExerciseList();
 
@@ -68,7 +67,7 @@ public class RoutineService {
             findExerciseDetailInfoDtoList.add(dto);
         }
 
-        return FindRoutineDetailDto.resultRoutineDto(routine.getId(), routine.getName(), findExerciseDetailInfoDtoList);
+        return FindRoutineDetailDto.createRoutineDto(routine.getId(), routine.getName(), findExerciseDetailInfoDtoList);
     }
 
     public void removeRoutine(Long routineId) {

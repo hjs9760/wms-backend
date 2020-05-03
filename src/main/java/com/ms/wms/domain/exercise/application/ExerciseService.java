@@ -25,7 +25,7 @@ public class ExerciseService {
         }
 
 
-        Exercise exercise = Exercise.convertSaveExercise(exerciseDto.getName(), exerciseDto.getMemberId());
+        Exercise exercise = Exercise.createExercise(exerciseDto.getName(), exerciseDto.getMemberId());
         exerciseRepository.save(exercise);
     }
 
@@ -40,8 +40,8 @@ public class ExerciseService {
 
     public List<FindExerciseDetailDto> findExerciseByName(String name) {
 
-        List<Exercise> exerciseList = exerciseRepository.findByNameLike("%" + name + "%");
-        List<FindExerciseDetailDto> findExerciseDetailDtoList = FindExerciseDetailDto.convertFindListExerciseDetailDto(exerciseList);
+        List<Exercise> exerciseList = exerciseRepository.findByNameContaining(name);
+        List<FindExerciseDetailDto> findExerciseDetailDtoList = FindExerciseDetailDto.convertFrom(exerciseList);
         return findExerciseDetailDtoList;
     }
 

@@ -16,5 +16,5 @@ public interface ExerciseRepository extends JpaRepository<Exercise, Long> {
     // 그리고 %가 하나 일때는 아래와 같은 jpa 키워드를 사용하면 됌
     // %name : startsWith
     // name% : endsWith
-    List<Exercise> findByNameLike(String name);
+    List<Exercise> findByNameContaining(String name);
 }

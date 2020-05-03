@@ -9,10 +9,10 @@ public class FindExerciseDetailInfoDto {
     private Long exerciseId;
     private String name;
     private int count;
-    private int weight;
+    private double weight;
     private int exerciseSet;
 
-    public static FindExerciseDetailInfoDto createFindExerciseDetailInfo(Long exerciseId, String name, int count, int weight, int exerciseSet) {
+    public static FindExerciseDetailInfoDto createFindExerciseDetailInfo(Long exerciseId, String name, int count, double weight, int exerciseSet) {
         FindExerciseDetailInfoDto findExerciseDetailInfoDto = new FindExerciseDetailInfoDto();
         findExerciseDetailInfoDto.exerciseId = exerciseId;;
         findExerciseDetailInfoDto.name = name;

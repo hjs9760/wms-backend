@@ -31,7 +31,7 @@ public class Exercise {
     private String name;
 
     // todo : convert라는 단어가 말이 안된다. name과 memberId를 갖고 exercise로 변환한다는 뜻이 이상하다
-    public static Exercise convertSaveExercise(String name, Long memberId) {
+    public static Exercise createExercise(String name, Long memberId) {
         Exercise exercise = new Exercise();
         exercise.name = name;
         exercise.memberId = memberId;
@@ -39,11 +39,4 @@ public class Exercise {
         return exercise;
     }
 
-    // todo : 사용하지 않는 메소드 지우자~
-    public static Exercise convertUpdateExercise(String name) {
-        Exercise exercise = new Exercise();
-        exercise.name = name;
-
-        return exercise;
-    }
 }

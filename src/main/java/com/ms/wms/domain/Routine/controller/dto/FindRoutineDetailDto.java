@@ -12,14 +12,14 @@ public class FindRoutineDetailDto {
     private String name;
 
     // todo : 마찬가지로 dtoList로 끝내지말고, exerciseDetailInfoList, exerciseDetailInfos로 변경
-    private List<FindExerciseDetailInfoDto> findExerciseDetailInfoDtoList;
+    private List<FindExerciseDetailInfoDto> exerciseDetailInfoList;
 
     // todo : 메소드 이름이 이상해
-    public static FindRoutineDetailDto resultRoutineDto(Long id, String name, List<FindExerciseDetailInfoDto> findExerciseDetailInfoDtoList) {
+    public static FindRoutineDetailDto createRoutineDto(Long id, String name, List<FindExerciseDetailInfoDto> findExerciseDetailInfoDtoList) {
         FindRoutineDetailDto findRoutineDetailDto = new FindRoutineDetailDto();
         findRoutineDetailDto.id = id;
         findRoutineDetailDto.name = name;
-        findRoutineDetailDto.findExerciseDetailInfoDtoList = findExerciseDetailInfoDtoList;
+        findRoutineDetailDto.exerciseDetailInfoList = findExerciseDetailInfoDtoList;
 
         return findRoutineDetailDto;
     }

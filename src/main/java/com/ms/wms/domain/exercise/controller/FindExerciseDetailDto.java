@@ -28,7 +28,7 @@ public class FindExerciseDetailDto {
     // 만약 메소드 시그니처가
     // List<FindExerciseDetailDto> convertFrom(List<Exercise> exerciseList) 이렇게 해도
     // 파라미터 (exerciseList)를 반환형 (List<FindExerciseDetailDto>) 으로 컨버팅하는구나 라고 쉽게 이해할 수 있음
-    public static List<FindExerciseDetailDto> convertFindListExerciseDetailDto(List<Exercise> exerciseList) {
+    public static List<FindExerciseDetailDto> convertFrom(List<Exercise> exerciseList) {
 
         return exerciseList.stream()
                 .map(exercise -> new FindExerciseDetailDto(exercise.getId(), exercise.getName()))
