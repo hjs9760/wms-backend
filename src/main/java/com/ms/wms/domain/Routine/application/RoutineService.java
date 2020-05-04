@@ -1,11 +1,11 @@
 package com.ms.wms.domain.routine.application;
 
-import com.ms.wms.domain.routine.controller.dto.*;
-import com.ms.wms.domain.routine.domain.Routine;
-import com.ms.wms.domain.routine.domain.RoutineRepository;
 import com.ms.wms.domain.exercise.domain.Exercise;
 import com.ms.wms.domain.exercise.domain.ExerciseRepository;
+import com.ms.wms.domain.routine.controller.dto.*;
+import com.ms.wms.domain.routine.domain.Routine;
 import com.ms.wms.domain.routine.domain.RoutineExercise;
+import com.ms.wms.domain.routine.domain.RoutineRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,7 +25,8 @@ public class RoutineService {
         Routine routine = Routine.createRoutine(saveRoutineDto.getName(), memberId);
 
         for (SaveRoutineExerciseDto dto : saveRoutineDto.getRoutineExerciseList()) {
-            Exercise exercise = exerciseRepository.findByIdAndMemberId(dto.getExerciseId(), memberId);
+            Exercise exercise = exerciseRepository.findById(dto.getExerciseId())
+                    .orElseThrow(() -> new RuntimeException(("존재하지 않는 exercise 입니다.")));
 
             if(!memberId.equals(exercise.getMemberId())) {
                 throw new RuntimeException("no permission");
@@ -41,12 +42,14 @@ public class RoutineService {
     @Transactional
     public void updateRoutine(Long memberId, UpdateRoutineDto updateRoutineDto) {
 
-        Routine routine = routineRepository.findByIdAndMemberId(updateRoutineDto.getRoutineId(), memberId);
+        Routine routine = routineRepository.findById(updateRoutineDto.getRoutineId())
+                .orElseThrow(() -> new RuntimeException(("존재하지 않는 routine 입니다.")));
 
         List<UpdateRoutineExerciseDto> dtoList = updateRoutineDto.getUpdateRoutineExerciseDtoList();
         List<RoutineExercise> routineExerciseList = new ArrayList<>();
         for (UpdateRoutineExerciseDto dto  : dtoList) {
-            Exercise exercise = exerciseRepository.findByIdAndMemberId(dto.getExerciseId(), memberId);
+            Exercise exercise = exerciseRepository.findById(dto.getExerciseId())
+                    .orElseThrow(() -> new RuntimeException(("존재하지 않는 exercise 입니다.")));
 
             if(!memberId.equals(exercise.getMemberId())) {
                 throw new RuntimeException(("no permission"));
@@ -60,7 +63,8 @@ public class RoutineService {
     }
 
     public FindRoutineDetailDto findRoutine(Long memberId, Long routineId) {
-        Routine routine = routineRepository.findByIdAndMemberId(routineId, memberId);
+        Routine routine = routineRepository.findById(routineId)
+                .orElseThrow(() -> new RuntimeException(("존재하지 않는 routine 입니다.")));
 
         if(!memberId.equals(routine.getMemberId())) {
             throw new RuntimeException("no permission");
@@ -82,8 +86,8 @@ public class RoutineService {
         return FindRoutineDetailDto.createRoutineDto(routine.getId(), routine.getName(), findExerciseDetailInfoList);
     }
 
-    public void removeRoutine(Long memberId, Long routineId) {
-        routineRepository.deleteByIdAndMemberId(routineId, memberId);
+    public void removeRoutine(Long routineId) {
+        routineRepository.deleteById(routineId);
     }
 
 }

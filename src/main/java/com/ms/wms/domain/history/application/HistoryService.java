@@ -25,7 +25,8 @@ public class HistoryService {
         List<History> historyList = new ArrayList<>();
 
         for (SaveHistoryDto dto : historyDtoList) {
-            Exercise exercise = exerciseRepository.findByIdAndMemberId(dto.getExerciseId(), memberId);
+            Exercise exercise = exerciseRepository.findById(dto.getExerciseId())
+                    .orElseThrow(() -> new RuntimeException(("존재하지 않는 exercise 입니다.")));
             historyList.add(History.createHistory(memberId, exercise, dto));
         }
 
@@ -70,7 +71,7 @@ public class HistoryService {
     }
 
     public List<HistoryDetailDto> findByCategory(Long memberId, Category category) {
-        List<Exercise> exerciseList = exerciseRepository.findByCategory(category);
+        List<Exercise> exerciseList = exerciseRepository.findByCategoryAndMemberId(category, memberId);
         List<Long> exerciseIdList = new ArrayList<>();
         for(Exercise exercise : exerciseList) {
             exerciseIdList.add(exercise.getId());

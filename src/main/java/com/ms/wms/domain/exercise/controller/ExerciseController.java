@@ -38,7 +38,7 @@ public class ExerciseController {
     }
 
     @PostMapping("/remove/{id}")
-    public void removeExercise(@AuthenticationPrincipal Long memberId, @PathVariable Long id) {
-        exerciseService.removeExercise(memberId, id);
+    public void removeExercise(@PathVariable Long id) {
+        exerciseService.removeExercise(id);
     }
 }

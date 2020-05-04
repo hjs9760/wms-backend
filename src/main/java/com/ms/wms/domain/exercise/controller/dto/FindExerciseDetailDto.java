@@ -25,7 +25,7 @@ public class FindExerciseDetailDto {
         return findExerciseDetailDto;
     }
 
-    public static List<FindExerciseDetailDto> convertFindListExerciseDetailDto(List<Exercise> exerciseList) {
+    public static List<FindExerciseDetailDto> convertFrom(List<Exercise> exerciseList) {
 
         return exerciseList.stream()
                 .map(exercise -> new FindExerciseDetailDto(exercise.getId(), exercise.getName(), exercise.getCategory()))

@@ -5,8 +5,6 @@ import com.ms.wms.domain.exercise.controller.dto.SaveExerciseDto;
 import com.ms.wms.domain.exercise.controller.dto.UpdateExerciseDto;
 import com.ms.wms.domain.exercise.domain.Exercise;
 import com.ms.wms.domain.exercise.domain.ExerciseRepository;
-import com.ms.wms.domain.history.domain.History;
-import com.ms.wms.domain.history.domain.HistoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +18,7 @@ public class ExerciseService {
     private final ExerciseRepository exerciseRepository;
 
     public void saveExercise(Long memberId, SaveExerciseDto exerciseDto) {
-        if(exerciseRepository.findByName(exerciseDto.getName()).size() >= 1) {
+        if(exerciseRepository.findByNameAndMemberId(exerciseDto.getName(), memberId).size() >= 1) {
             System.out.println("중복이요");
         } else {
             Exercise exercise = Exercise.createExercise(exerciseDto.getName(), memberId, exerciseDto.getCategory());
@@ -30,7 +28,8 @@ public class ExerciseService {
 
     public FindExerciseDetailDto findExerciseById(Long memberId, Long id) {
 
-        Exercise exercise = exerciseRepository.findByIdAndMemberId(id, memberId);
+        Exercise exercise = exerciseRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("조회되지 않은 exercise 입니다."));
 
         if (!memberId.equals(exercise.getMemberId())) {
             throw new RuntimeException("no permission");
@@ -42,7 +41,7 @@ public class ExerciseService {
     }
 
     public List<FindExerciseDetailDto> findExerciseByName(Long memberId, String name) {
-        List<Exercise> exerciseList = exerciseRepository.findByMemberIdAndNameLike(memberId, "%" + name + "%");
+        List<Exercise> exerciseList = exerciseRepository.findByNameContainingAndMemberId(name, memberId);
 
         for (Exercise exercise : exerciseList) {
             if(!memberId.equals(exercise.getMemberId())) {
@@ -50,13 +49,14 @@ public class ExerciseService {
             }
         }
 
-        List<FindExerciseDetailDto> findExerciseDetailDtoList = FindExerciseDetailDto.convertFindListExerciseDetailDto(exerciseList);
+        List<FindExerciseDetailDto> findExerciseDetailDtoList = FindExerciseDetailDto.convertFrom(exerciseList);
         return findExerciseDetailDtoList;
     }
 
     @Transactional
     public void updateExercise(Long memberId, UpdateExerciseDto updateExerciseDto) {
-        Exercise exercise = exerciseRepository.findByIdAndMemberId(updateExerciseDto.getExerciseId(), memberId);
+        Exercise exercise = exerciseRepository.findById(updateExerciseDto.getExerciseId())
+                .orElseThrow(() -> new RuntimeException(("존재하지 않는 exercise 입니다.")));
 
         if (!memberId.equals(exercise.getMemberId())) {
             throw new RuntimeException("no permission");
@@ -66,7 +66,7 @@ public class ExerciseService {
         exercise.setCategory(updateExerciseDto.getCategory());
     }
 
-    public void removeExercise(Long memberId, Long id) {
-        exerciseRepository.deleteByIdAndMemberId(id, memberId);
+    public void removeExercise(Long id) {
+        exerciseRepository.deleteById(id);
     }
 }
