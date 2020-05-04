@@ -8,6 +8,6 @@ import java.util.List;
 public class SaveRoutineDto {
 
     private String name;
-    private List<SaveRoutineExerciseDto> saveRoutineExerciseDtoList;
-
+    private Long memberId;
+    private List<SaveRoutineExerciseDto> routineExerciseList;
 }

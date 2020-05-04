@@ -4,18 +4,19 @@ import lombok.Getter;
 
 import java.util.List;
 
+
 @Getter
 public class FindRoutineDetailDto {
 
     private Long id;
     private String name;
-    private List<FindExerciseDetailInfo> findExerciseDetailInfoList;
+    private List<FindExerciseDetailInfoDto> exerciseDetailInfoList;
 
-    public static FindRoutineDetailDto resultRoutineDto(Long id, String name, List<FindExerciseDetailInfo> findExerciseDetailInfoList) {
+    public static FindRoutineDetailDto createRoutineDto(Long id, String name, List<FindExerciseDetailInfoDto> findExerciseDetailInfoDtoDtoList) {
         FindRoutineDetailDto findRoutineDetailDto = new FindRoutineDetailDto();
         findRoutineDetailDto.id = id;
         findRoutineDetailDto.name = name;
-        findRoutineDetailDto.findExerciseDetailInfoList = findExerciseDetailInfoList;
+        findRoutineDetailDto.exerciseDetailInfoList = findExerciseDetailInfoDtoDtoList;
 
         return findRoutineDetailDto;
     }

@@ -11,6 +11,5 @@ public class UpdateRoutineDto {
 
     private Long routineId;
     private String name;
-    private List<SaveRoutineExerciseDto> saveRoutineExerciseDtoList;
-
+    private List<UpdateRoutineExerciseDto> updateRoutineExerciseDtoList;
 }

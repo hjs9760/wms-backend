@@ -1,7 +1,7 @@
 package com.ms.wms.domain.routine.domain;
 
-import com.ms.wms.domain.routine.controller.dto.SaveRoutineExerciseDto;
 import com.ms.wms.domain.exercise.domain.Exercise;
+import com.ms.wms.domain.routine.controller.dto.SaveRoutineExerciseDto;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -40,8 +40,15 @@ public class Routine {
     }
 
     public void addExerciseInfo(Exercise exercise, SaveRoutineExerciseDto saveRoutineExerciseDto) {
-        this.routineExerciseList.add(RoutineExercise.createSaveRoutineExercise(this, exercise, saveRoutineExerciseDto.getExerciseSet()
-                                                            , saveRoutineExerciseDto.getCount(), saveRoutineExerciseDto.getWeight()));
+
+        RoutineExercise routineExercise = RoutineExercise.createRoutineExercise(
+                this,
+                exercise,
+                saveRoutineExerciseDto.getExerciseSet()
+                , saveRoutineExerciseDto.getCount(),
+                saveRoutineExerciseDto.getWeight());
+
+        this.routineExerciseList.add(routineExercise);
     }
 
     public void updateRoutineInfo(String name, List<RoutineExercise> routineExercises) {

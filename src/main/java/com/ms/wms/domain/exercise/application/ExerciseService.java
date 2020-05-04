@@ -23,7 +23,7 @@ public class ExerciseService {
         if(exerciseRepository.findByName(exerciseDto.getName()).size() >= 1) {
             System.out.println("중복이요");
         } else {
-            Exercise exercise = Exercise.convertSaveExercise(exerciseDto.getName(), memberId, exerciseDto.getCategory());
+            Exercise exercise = Exercise.createExercise(exerciseDto.getName(), memberId, exerciseDto.getCategory());
             exerciseRepository.save(exercise);
         }
     }

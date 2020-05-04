@@ -24,7 +24,7 @@ public class RoutineService {
 
         Routine routine = Routine.createRoutine(saveRoutineDto.getName(), memberId);
 
-        for (SaveRoutineExerciseDto dto : saveRoutineDto.getSaveRoutineExerciseDtoList()) {
+        for (SaveRoutineExerciseDto dto : saveRoutineDto.getRoutineExerciseList()) {
             Exercise exercise = exerciseRepository.findByIdAndMemberId(dto.getExerciseId(), memberId);
 
             if(!memberId.equals(exercise.getMemberId())) {
@@ -43,16 +43,16 @@ public class RoutineService {
 
         Routine routine = routineRepository.findByIdAndMemberId(updateRoutineDto.getRoutineId(), memberId);
 
-        List<SaveRoutineExerciseDto> dtoList = updateRoutineDto.getSaveRoutineExerciseDtoList();
+        List<UpdateRoutineExerciseDto> dtoList = updateRoutineDto.getUpdateRoutineExerciseDtoList();
         List<RoutineExercise> routineExerciseList = new ArrayList<>();
-        for (SaveRoutineExerciseDto dto  : dtoList) {
+        for (UpdateRoutineExerciseDto dto  : dtoList) {
             Exercise exercise = exerciseRepository.findByIdAndMemberId(dto.getExerciseId(), memberId);
 
             if(!memberId.equals(exercise.getMemberId())) {
                 throw new RuntimeException(("no permission"));
             }
 
-            RoutineExercise routineExercise = RoutineExercise.createSaveRoutineExercise(routine, exercise, dto.getExerciseSet(), dto.getCount(), dto.getWeight());
+            RoutineExercise routineExercise = RoutineExercise.createRoutineExercise(routine, exercise, dto.getExerciseSet(), dto.getCount(), dto.getWeight());
             routineExerciseList.add(routineExercise);
         }
 
@@ -67,19 +67,19 @@ public class RoutineService {
         }
         List<RoutineExercise> routineExerciseList = routine.getRoutineExerciseList();
 
-        List<FindExerciseDetailInfo> findExerciseDetailInfoList = new ArrayList<>();
+        List<FindExerciseDetailInfoDto> findExerciseDetailInfoList = new ArrayList<>();
 
         for(RoutineExercise routineExercise : routineExerciseList) {
-            FindExerciseDetailInfo findExerciseDetailInfo = FindExerciseDetailInfo.createFindExerciseDetailInfo(routineExercise.getExercise().getId()
-                                                                                        , routineExercise.getExercise().getName()
-                                                                                        , routineExercise.getExercise().getCategory()
-                                                                                        , routineExercise.getCount()
-                                                                                        , routineExercise.getWeight()
-                                                                                        , routineExercise.getExerciseSet());
+            FindExerciseDetailInfoDto findExerciseDetailInfo = FindExerciseDetailInfoDto.createFindExerciseDetailInfo(routineExercise.getExercise().getId()
+                    , routineExercise.getExercise().getName()
+                    , routineExercise.getExercise().getCategory()
+                    , routineExercise.getCount()
+                    , routineExercise.getWeight()
+                    , routineExercise.getExerciseSet());
             findExerciseDetailInfoList.add(findExerciseDetailInfo);
         }
 
-        return FindRoutineDetailDto.resultRoutineDto(routine.getId(), routine.getName(), findExerciseDetailInfoList);
+        return FindRoutineDetailDto.createRoutineDto(routine.getId(), routine.getName(), findExerciseDetailInfoList);
     }
 
     public void removeRoutine(Long memberId, Long routineId) {

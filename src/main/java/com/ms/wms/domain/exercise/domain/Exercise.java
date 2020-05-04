@@ -29,7 +29,7 @@ public class Exercise {
     @Column
     private String name;
 
-    public static Exercise convertSaveExercise(String name, Long memberId, Category category) {
+    public static Exercise createExercise(String name, Long memberId, Category category) {
         Exercise exercise = new Exercise();
         exercise.name = name;
         exercise.memberId = memberId;

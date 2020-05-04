@@ -26,15 +26,15 @@ public class RoutineExercise {
     private Exercise exercise;
 
     @Column
-    private int count;
+    private Integer count;
 
     @Column
     private Double weight;
 
     @Column
-    private int exerciseSet;
+    private Integer exerciseSet;
 
-    public static RoutineExercise createSaveRoutineExercise(Routine routine, Exercise exercise, int exerciseSet, int count, Double weight) {
+    public static RoutineExercise createRoutineExercise(Routine routine, Exercise exercise, int exerciseSet, int count, double weight) {
         RoutineExercise routineExercise = new RoutineExercise();
         routineExercise.routine = routine;
         routineExercise.exercise = exercise;
@@ -44,5 +44,4 @@ public class RoutineExercise {
 
         return routineExercise;
     }
-
 }
