@@ -86,8 +86,8 @@ public class RoutineService {
         return FindRoutineDetailDto.createRoutineDto(routine.getId(), routine.getName(), findExerciseDetailInfoList);
     }
 
-    public void removeRoutine(Long routineId) {
-        routineRepository.deleteById(routineId);
+    public void removeRoutine(Long memberId, Long routineId) {
+        routineRepository.deleteByIdAndMemberId(routineId, memberId);
     }
 
 }

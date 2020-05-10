@@ -11,10 +11,10 @@ create table history
 (
     history_id   bigint not null auto_increment,
     count        integer,
-    edate        datetime,
+    end_date        datetime,
     exercise_set integer,
     member_id    bigint,
-    sdate        datetime,
+    start_date        datetime,
     weight       double precision,
     exercise_id  bigint,
     primary key (history_id)
