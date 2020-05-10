@@ -13,6 +13,6 @@ public class StatisticsService {
     private final HistoryRepository historyRepository;
 
     public StatisticsDetailDto findHistoryList(Long memberId, StatisticsDto statisticsDto) {
-        return historyRepository.findHistoryList(memberId, statisticsDto.getExerciseId(), statisticsDto.getSdate(), statisticsDto.getEdate());
+        return historyRepository.findHistoryList(memberId, statisticsDto.getExerciseId(), statisticsDto.getStartDate(), statisticsDto.getEndDate());
     }
 }

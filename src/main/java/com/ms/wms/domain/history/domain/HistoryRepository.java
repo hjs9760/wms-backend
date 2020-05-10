@@ -15,7 +15,7 @@ public interface HistoryRepository extends JpaRepository<History, Long>, History
 
     List<History> findByMemberId(Long memberId);
 
-    List<History> findByMemberIdAndEdateBetween(Long memberId, LocalDateTime sdate, LocalDateTime edate);
+    List<History> findByMemberIdAndEndDateBetween(Long memberId, LocalDateTime startDate, LocalDateTime endDate);
 
-    List<History> findByExerciseIdAndEdateBetween(Long exerciseId, LocalDateTime sdate, LocalDateTime edate);
+    List<History> findByExerciseIdAndEndDateBetween(Long exerciseId, LocalDateTime startDate, LocalDateTime endDate);
 }

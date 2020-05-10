@@ -5,4 +5,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface RoutineRepository extends JpaRepository<Routine, Long> {
+    void deleteByIdAndMemberId(Long routineId, Long memberId);
 }

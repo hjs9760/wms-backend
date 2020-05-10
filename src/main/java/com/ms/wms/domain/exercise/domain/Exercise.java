@@ -37,4 +37,9 @@ public class Exercise {
 
         return exercise;
     }
+
+    public void updateInfo(String name, Category category) {
+        this.name = name;
+        this.category = category;
+    }
 }

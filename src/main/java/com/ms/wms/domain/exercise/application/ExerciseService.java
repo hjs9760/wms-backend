@@ -19,7 +19,7 @@ public class ExerciseService {
 
     public void saveExercise(Long memberId, SaveExerciseDto exerciseDto) {
         if(exerciseRepository.findByNameAndMemberId(exerciseDto.getName(), memberId).size() >= 1) {
-            System.out.println("중복이요");
+            new RuntimeException("중복되는 운동명이 있습니다.");
         } else {
             Exercise exercise = Exercise.createExercise(exerciseDto.getName(), memberId, exerciseDto.getCategory());
             exerciseRepository.save(exercise);
@@ -35,19 +35,13 @@ public class ExerciseService {
             throw new RuntimeException("no permission");
         }
 
-        FindExerciseDetailDto findExerciseDetailDto = FindExerciseDetailDto.convertFindExerciseDetailDto(exercise.getId(), exercise.getName(), exercise.getCategory());
+        FindExerciseDetailDto findExerciseDetailDto = new FindExerciseDetailDto(exercise.getId(), exercise.getName(), exercise.getCategory());
 
         return findExerciseDetailDto;
     }
 
     public List<FindExerciseDetailDto> findExerciseByName(Long memberId, String name) {
         List<Exercise> exerciseList = exerciseRepository.findByNameContainingAndMemberId(name, memberId);
-
-        for (Exercise exercise : exerciseList) {
-            if(!memberId.equals(exercise.getMemberId())) {
-                throw new RuntimeException("no permission");
-            }
-        }
 
         List<FindExerciseDetailDto> findExerciseDetailDtoList = FindExerciseDetailDto.convertFrom(exerciseList);
         return findExerciseDetailDtoList;
@@ -62,11 +56,10 @@ public class ExerciseService {
             throw new RuntimeException("no permission");
         }
 
-        exercise.setName(updateExerciseDto.getName());
-        exercise.setCategory(updateExerciseDto.getCategory());
+        exercise.updateInfo(updateExerciseDto.getName(), updateExerciseDto.getCategory());
     }
 
-    public void removeExercise(Long id) {
-        exerciseRepository.deleteById(id);
+    public void removeExercise(Long memberId, Long id) {
+        exerciseRepository.deleteByIdAndMemberId(id, memberId);
     }
 }

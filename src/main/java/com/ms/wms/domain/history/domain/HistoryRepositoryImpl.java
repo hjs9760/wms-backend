@@ -19,10 +19,10 @@ public class HistoryRepositoryImpl extends QuerydslRepositorySupport implements 
     }
 
     @Override
-    public StatisticsDetailDto findHistoryList(Long memberId, Long exerciseId, LocalDate sdate, LocalDate edate) {
+    public StatisticsDetailDto findHistoryList(Long memberId, Long exerciseId, LocalDate startDate, LocalDate endDate) {
         StringTemplate formattedDate = Expressions.stringTemplate(
                 "DATE_FORMAT({0}, {1})"
-                , edate
+                , endDate
                 , ConstantImpl.create("%Y-%m-%d"));
 
         QHistory qHistory = QHistory.history;
@@ -32,10 +32,10 @@ public class HistoryRepositoryImpl extends QuerydslRepositorySupport implements 
                 .join(qExercise).on(qHistory.exercise.id.eq(qExercise.id))
                 .where(qHistory.exercise.id.eq(exerciseId)
                         .and(qHistory.memberId.eq(memberId))
-                        .and(qHistory.edate.between(sdate.atStartOfDay(), edate.atStartOfDay())))
-                .groupBy(formattedDate, qHistory.edate)
-                .orderBy(qHistory.edate.asc())
-                .select(Projections.constructor(StatisticsDetailInfoDto.class, qHistory.edate.as("date"), qHistory.weight.multiply(qHistory.count).sum()))
+                        .and(qHistory.endDate.between(startDate.atStartOfDay(), endDate.atStartOfDay())))
+                .groupBy(formattedDate, qHistory.endDate)
+                .orderBy(qHistory.endDate.asc())
+                .select(Projections.constructor(StatisticsDetailInfoDto.class, qHistory.endDate.as("date"), qHistory.weight.multiply(qHistory.count).sum()))
                 .fetch();
 
         return new StatisticsDetailDto(statisticsDetailInfoList);

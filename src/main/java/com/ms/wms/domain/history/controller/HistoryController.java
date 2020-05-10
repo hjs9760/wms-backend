@@ -31,7 +31,7 @@ public class HistoryController {
     }
 
     // 회원에 대한 전체 운동 이력 조회
-    @GetMapping("findByMember/{memberId}")
+    @GetMapping("findByMember")
     public List<HistoryDetailDto> findHistoryByMemberId(@AuthenticationPrincipal Long memberId) {
         return historyService.findByMemberId(memberId);
     }
@@ -44,9 +44,8 @@ public class HistoryController {
 
     // 기간에 대한 운동 이력 조회
     @GetMapping("findByDate")
-    public List<HistoryDetailDto> findByDate(@AuthenticationPrincipal Long memberId, @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss") LocalDateTime sdate
-                                                                                    , @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")LocalDateTime edate){
-        return historyService.findByDate(memberId, sdate, edate);
+    public List<HistoryDetailDto> findByDate(@AuthenticationPrincipal Long memberId, @RequestParam LocalDateTime startDate, @RequestParam LocalDateTime endDate){
+        return historyService.findByDate(memberId, startDate, endDate);
     }
 
 }

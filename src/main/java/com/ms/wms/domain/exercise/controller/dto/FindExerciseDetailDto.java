@@ -20,11 +20,6 @@ public class FindExerciseDetailDto {
         this.category = category;
     }
 
-    public static FindExerciseDetailDto convertFindExerciseDetailDto(Long id, String name, Category category) {
-        FindExerciseDetailDto findExerciseDetailDto = new FindExerciseDetailDto(id, name, category);
-        return findExerciseDetailDto;
-    }
-
     public static List<FindExerciseDetailDto> convertFrom(List<Exercise> exerciseList) {
 
         return exerciseList.stream()

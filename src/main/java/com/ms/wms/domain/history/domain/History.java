@@ -37,21 +37,21 @@ public class History {
     private Integer exerciseSet;
 
     @Column(updatable = false)
-    private LocalDateTime sdate;
+    private LocalDateTime startDate;
 
     @Column(updatable = false)
-    private LocalDateTime edate;
+    private LocalDateTime endDate;
 
     @QueryProjection
-    public History(Long id, Long memberId, Exercise exercise, Integer count, Double weight, Integer exerciseSet, LocalDateTime sdate, LocalDateTime edate) {
+    public History(Long id, Long memberId, Exercise exercise, Integer count, Double weight, Integer exerciseSet, LocalDateTime startDate, LocalDateTime endDate) {
         this.id = id;
         this.memberId = memberId;
         this.exercise = exercise;
         this.count = count;
         this.weight = weight;
         this.exerciseSet = exerciseSet;
-        this.sdate = sdate;
-        this.edate = edate;
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
 
     public static History createHistory(Long memberId, Exercise exercise, SaveHistoryDto dto) {
@@ -62,8 +62,8 @@ public class History {
         history.exerciseSet = dto.getExerciseSet();
         history.weight = dto.getWeight();
         history.count = dto.getCount();
-        history.sdate = dto.getSdate();
-        history.edate = dto.getEdate();
+        history.startDate = dto.getStartDate();
+        history.endDate = dto.getEndDate();
 
         return history;
 

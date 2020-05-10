@@ -27,6 +27,7 @@ public class HistoryService {
         for (SaveHistoryDto dto : historyDtoList) {
             Exercise exercise = exerciseRepository.findById(dto.getExerciseId())
                     .orElseThrow(() -> new RuntimeException(("존재하지 않는 exercise 입니다.")));
+
             historyList.add(History.createHistory(memberId, exercise, dto));
         }
 
@@ -39,11 +40,6 @@ public class HistoryService {
         List<HistoryDetailDto> historyDetailDtoList = new ArrayList<>();
 
         for(History history : historyList) {
-
-            if(!memberId.equals(history.getMemberId())) {
-                throw new RuntimeException("no permission");
-            }
-
             HistoryDetailDto dto = HistoryDetailDto.createHistory(history);
             historyDetailDtoList.add(dto);
         }
@@ -57,11 +53,6 @@ public class HistoryService {
         List<HistoryDetailDto> historyDetailDtoList = new ArrayList<>();
 
         for(History history : historyList) {
-
-            if(!memberId.equals(history.getMemberId())) {
-                throw new RuntimeException("no permission");
-            }
-
             HistoryDetailDto dto = HistoryDetailDto.createHistory(history);
             historyDetailDtoList.add(dto);
         }
@@ -72,19 +63,16 @@ public class HistoryService {
 
     public List<HistoryDetailDto> findByCategory(Long memberId, Category category) {
         List<Exercise> exerciseList = exerciseRepository.findByCategoryAndMemberId(category, memberId);
+
         List<Long> exerciseIdList = new ArrayList<>();
         for(Exercise exercise : exerciseList) {
             exerciseIdList.add(exercise.getId());
         }
+
         List<History> historyList = historyRepository.findByMemberIdAndExerciseIdIn(memberId, exerciseIdList);
         List<HistoryDetailDto> historyDetailDtoList = new ArrayList<>();
 
         for(History history : historyList) {
-
-            if(!memberId.equals(history.getMemberId())) {
-                throw new RuntimeException("no permission");
-            }
-
             HistoryDetailDto dto = HistoryDetailDto.createHistory(history);
             historyDetailDtoList.add(dto);
         }
@@ -92,17 +80,12 @@ public class HistoryService {
         return historyDetailDtoList;
     }
 
-    public List<HistoryDetailDto> findByDate(Long memberId, LocalDateTime sdate, LocalDateTime edate) {
-        List<History> historyList =  historyRepository.findByMemberIdAndEdateBetween(memberId, sdate, edate);
+    public List<HistoryDetailDto> findByDate(Long memberId, LocalDateTime startDate, LocalDateTime endDate) {
+        List<History> historyList =  historyRepository.findByMemberIdAndEndDateBetween(memberId, startDate, endDate);
 
         List<HistoryDetailDto> historyDetailDtoList = new ArrayList<>();
 
         for(History history : historyList) {
-
-            if(!memberId.equals(history.getMemberId())) {
-                throw new RuntimeException("no permission");
-            }
-
             HistoryDetailDto dto = HistoryDetailDto.createHistory(history);
             historyDetailDtoList.add(dto);
         }

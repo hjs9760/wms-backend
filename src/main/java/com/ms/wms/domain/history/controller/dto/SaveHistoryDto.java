@@ -11,7 +11,7 @@ public class SaveHistoryDto {
     private Integer exerciseSet;
     private Double weight;
     private Integer count;
-    private LocalDateTime sdate;
-    private LocalDateTime edate;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
 
 }

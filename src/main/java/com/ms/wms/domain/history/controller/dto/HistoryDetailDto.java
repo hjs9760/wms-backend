@@ -13,8 +13,8 @@ public class HistoryDetailDto {
     private Long exerciseId;
     private Category category;
     private String exerciseName;
-    private LocalDateTime sdate;
-    private LocalDateTime edate;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
     private Integer exerciseSet;
     private Double weight;
     private Integer count;
@@ -26,8 +26,8 @@ public class HistoryDetailDto {
         dto.exerciseId = history.getExercise().getId();
         dto.category = history.getExercise().getCategory();
         dto.exerciseName = history.getExercise().getName();
-        dto.sdate = history.getSdate();
-        dto.edate = history.getEdate();
+        dto.startDate = history.getStartDate();
+        dto.endDate = history.getEndDate();
         dto.exerciseSet = history.getExerciseSet();
         dto.weight = history.getWeight();
         dto.count = history.getCount();

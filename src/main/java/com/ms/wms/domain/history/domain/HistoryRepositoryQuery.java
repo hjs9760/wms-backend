@@ -6,5 +6,5 @@ import java.time.LocalDate;
 
 public interface HistoryRepositoryQuery {
 
-    StatisticsDetailDto findHistoryList(Long memberId, Long exerciseId, LocalDate sdate, LocalDate edate);
+    StatisticsDetailDto findHistoryList(Long memberId, Long exerciseId, LocalDate startDate, LocalDate endDate);
 }

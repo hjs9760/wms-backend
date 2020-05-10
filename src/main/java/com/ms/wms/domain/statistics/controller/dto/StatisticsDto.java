@@ -9,8 +9,8 @@ import java.time.LocalDate;
 @Setter
 public class StatisticsDto {
 
-    private LocalDate sdate;
-    private LocalDate edate;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private Long exerciseId;
 
 
