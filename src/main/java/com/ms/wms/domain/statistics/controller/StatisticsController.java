@@ -18,7 +18,7 @@ public class StatisticsController {
     private final StatisticsService statisticsService;
 
     @PostMapping("/analysis")
-    public StatisticsDetailDto StatisticsByExercise(@AuthenticationPrincipal Long memberId, @RequestBody StatisticsDto statisticsDto) {
+    public StatisticsDetailDto statisticsByExercise(@AuthenticationPrincipal Long memberId, @RequestBody StatisticsDto statisticsDto) {
         return statisticsService.findHistoryList(memberId, statisticsDto);
     }
 }
