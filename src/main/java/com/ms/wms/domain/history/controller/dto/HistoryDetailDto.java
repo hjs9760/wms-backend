@@ -1,6 +1,5 @@
 package com.ms.wms.domain.history.controller.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ms.wms.domain.exercise.domain.Category;
 import com.ms.wms.domain.history.domain.History;
 import lombok.Getter;
@@ -14,9 +13,7 @@ public class HistoryDetailDto {
     private Long exerciseId;
     private Category category;
     private String exerciseName;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime sdate;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime edate;
     private Integer exerciseSet;
     private Double weight;

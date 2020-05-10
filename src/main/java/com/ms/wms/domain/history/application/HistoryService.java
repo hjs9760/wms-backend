@@ -109,4 +109,5 @@ public class HistoryService {
 
         return historyDetailDtoList;
     }
+
 }

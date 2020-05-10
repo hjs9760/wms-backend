@@ -1,8 +1,8 @@
 package com.ms.wms.domain.history.domain;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ms.wms.domain.exercise.domain.Exercise;
 import com.ms.wms.domain.history.controller.dto.SaveHistoryDto;
+import com.querydsl.core.annotations.QueryProjection;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -42,6 +42,17 @@ public class History {
     @Column(updatable = false)
     private LocalDateTime edate;
 
+    @QueryProjection
+    public History(Long id, Long memberId, Exercise exercise, Integer count, Double weight, Integer exerciseSet, LocalDateTime sdate, LocalDateTime edate) {
+        this.id = id;
+        this.memberId = memberId;
+        this.exercise = exercise;
+        this.count = count;
+        this.weight = weight;
+        this.exerciseSet = exerciseSet;
+        this.sdate = sdate;
+        this.edate = edate;
+    }
 
     public static History createHistory(Long memberId, Exercise exercise, SaveHistoryDto dto) {
         History history =new History();

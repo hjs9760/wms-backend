@@ -1,5 +1,6 @@
 package com.ms.wms.global.config.security;
 
+import com.ms.wms.global.config.security.jwt.JWTAuthorizationFilter;
 import com.ms.wms.global.config.security.oauth2.MyAuthenticationSuccessHandler;
 import com.ms.wms.global.config.security.oauth2.custom.KakaoOAuth2User;
 import com.ms.wms.global.config.security.oauth2.custom.NaverOAuth2User;
@@ -8,6 +9,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
  * Created by JaeeonJin on 2018-08-02.
@@ -34,6 +36,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //.anyRequest().authenticated()
                 .and()
                 // oauth2 login 설정
+                .addFilterBefore(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .oauth2Login()
                 .successHandler(new MyAuthenticationSuccessHandler())
                 // customUserType을 추가하면, 내부적으로 'CustomUserTypesOAuth2UserService' 클래스 사용

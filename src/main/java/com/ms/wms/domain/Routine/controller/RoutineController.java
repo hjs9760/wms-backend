@@ -33,7 +33,7 @@ public class RoutineController {
     }
 
     @PostMapping("/{routineId}")
-    public void removeRoutine(@AuthenticationPrincipal Long memberId, @PathVariable Long routineId) {
-        routineService.removeRoutine(memberId, routineId);
+    public void removeRoutine(@PathVariable Long routineId) {
+        routineService.removeRoutine(routineId);
     }
 }

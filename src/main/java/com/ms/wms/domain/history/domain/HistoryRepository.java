@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
-public interface HistoryRepository extends JpaRepository<History, Long> {
+public interface HistoryRepository extends JpaRepository<History, Long>, HistoryRepositoryQuery {
 
     List<History> findByMemberIdAndExerciseId(Long memberId, Long exerciseId);
 
@@ -16,4 +16,6 @@ public interface HistoryRepository extends JpaRepository<History, Long> {
     List<History> findByMemberId(Long memberId);
 
     List<History> findByMemberIdAndEdateBetween(Long memberId, LocalDateTime sdate, LocalDateTime edate);
+
+    List<History> findByExerciseIdAndEdateBetween(Long exerciseId, LocalDateTime sdate, LocalDateTime edate);
 }
