@@ -3,6 +3,7 @@ package com.ms.wms.global.config.security.oauth2;
 import com.ms.wms.domain.member.domain.Member;
 import com.ms.wms.domain.member.domain.MemberRepository;
 import com.ms.wms.global.config.security.oauth2.custom.MyOAuth2User;
+import com.ms.wms.global.config.slack.SlackMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
@@ -20,6 +21,8 @@ public class MyOAuth2AuthorizedClientService implements OAuth2AuthorizedClientSe
 
     @Autowired
     private MemberRepository memberRepository;
+    @Autowired
+    private SlackMessage slackMessage;
 
     @Override
     public void saveAuthorizedClient(OAuth2AuthorizedClient oAuth2AuthorizedClient, Authentication authentication) {
@@ -33,6 +36,9 @@ public class MyOAuth2AuthorizedClientService implements OAuth2AuthorizedClientSe
 
         Member member = new Member(id, name, providerType, accessToken.getTokenValue(), refreshToken.getTokenValue());
         memberRepository.save(member);
+
+        slackMessage.sendSlackMessage("Success",name+ " 님이 wms에 회원이 되었습니다.");
+
 
         oauth2User.dbPK  = member.getId();
     }

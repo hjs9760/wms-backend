@@ -41,6 +41,9 @@ dependencies {
     compile group: 'com.querydsl', name: 'querydsl-core', version: '4.2.1'
     compile('com.fasterxml.jackson.datatype:jackson-datatype-jsr310')
 
+    compile group: 'com.github.seratch', name: 'jslack', version: '3.4.2'
+
+
 }
 
 test {

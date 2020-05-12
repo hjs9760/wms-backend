@@ -5,7 +5,9 @@ import com.ms.wms.domain.exercise.controller.dto.SaveExerciseDto;
 import com.ms.wms.domain.exercise.controller.dto.UpdateExerciseDto;
 import com.ms.wms.domain.exercise.domain.Exercise;
 import com.ms.wms.domain.exercise.domain.ExerciseRepository;
+import com.ms.wms.global.config.slack.SlackMessage;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,10 +18,13 @@ import java.util.List;
 public class ExerciseService {
 
     private final ExerciseRepository exerciseRepository;
+    @Autowired
+    private final SlackMessage slackMessage;
 
     public void saveExercise(Long memberId, SaveExerciseDto exerciseDto) {
         if(exerciseRepository.findByNameAndMemberId(exerciseDto.getName(), memberId).size() >= 1) {
             new RuntimeException("중복되는 운동명이 있습니다.");
+            slackMessage.sendSlackMessage("Error", "member_id가 "+ memberId+ "가 등록할 '" + exerciseDto.getName() +"' 는(은) 중복되는 운동명 입니다.");
         } else {
             Exercise exercise = Exercise.createExercise(exerciseDto.getName(), memberId, exerciseDto.getCategory());
             exerciseRepository.save(exercise);
@@ -62,4 +67,5 @@ public class ExerciseService {
     public void removeExercise(Long memberId, Long id) {
         exerciseRepository.deleteByIdAndMemberId(id, memberId);
     }
+
 }
