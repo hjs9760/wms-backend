@@ -12,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -45,7 +47,7 @@ public class RoutineService {
         Routine routine = routineRepository.findById(updateRoutineDto.getRoutineId())
                 .orElseThrow(() -> new RuntimeException(("존재하지 않는 routine 입니다.")));
 
-        List<UpdateRoutineExerciseDto> dtoList = updateRoutineDto.getUpdateRoutineExerciseDtoList();
+        List<UpdateRoutineExerciseDto> dtoList = updateRoutineDto.getRoutineExerciseList();
         List<RoutineExercise> routineExerciseList = new ArrayList<>();
         for (UpdateRoutineExerciseDto dto  : dtoList) {
             Exercise exercise = exerciseRepository.findById(dto.getExerciseId())
@@ -63,31 +65,75 @@ public class RoutineService {
     }
 
     public FindRoutineDetailDto findRoutine(Long memberId, Long routineId) {
+
         Routine routine = routineRepository.findById(routineId)
                 .orElseThrow(() -> new RuntimeException(("존재하지 않는 routine 입니다.")));
 
-        if(!memberId.equals(routine.getMemberId())) {
+        if (!memberId.equals(routine.getMemberId())) {
             throw new RuntimeException("no permission");
         }
-        List<RoutineExercise> routineExerciseList = routine.getRoutineExerciseList();
 
-        List<FindExerciseDetailInfoDto> findExerciseDetailInfoList = new ArrayList<>();
-
-        for(RoutineExercise routineExercise : routineExerciseList) {
-            FindExerciseDetailInfoDto findExerciseDetailInfo = FindExerciseDetailInfoDto.createFindExerciseDetailInfo(routineExercise.getExercise().getId()
-                    , routineExercise.getExercise().getName()
-                    , routineExercise.getExercise().getCategory()
-                    , routineExercise.getCount()
-                    , routineExercise.getWeight()
-                    , routineExercise.getExerciseSet());
-            findExerciseDetailInfoList.add(findExerciseDetailInfo);
-        }
-
-        return FindRoutineDetailDto.createRoutineDto(routine.getId(), routine.getName(), findExerciseDetailInfoList);
+        return this.mapToDto(routine);
     }
 
     public void removeRoutine(Long memberId, Long routineId) {
         routineRepository.deleteByIdAndMemberId(routineId, memberId);
     }
 
+
+    public List<FindRoutineDetailDto> findRoutineList(Long memberId) {
+
+        List<Routine> routines = this.routineRepository.findAllByMemberId(memberId);
+        List<FindRoutineDetailDto> routineDetailDtoList = new ArrayList<>();
+
+        for (Routine routine : routines) {
+
+            // 운동 정보 맵
+            FindRoutineDetailDto dto = mapToDto(routine);
+            routineDetailDtoList.add(dto);
+        }
+
+        return routineDetailDtoList;
+    }
+
+    private FindRoutineDetailDto mapToDto(Routine routine) {
+
+        // 운동 정보 맵
+        Set<Exercise> routineExerciseSet = routine.getRoutineExerciseList().stream()
+                .map(RoutineExercise::getExercise)
+                .collect(Collectors.toSet());
+
+        List<ExerciseInfoDto> exerciseInfoDtoList = new ArrayList<>();
+
+        for (Exercise exercise: routineExerciseSet) {
+
+            ExerciseInfoDto exerciseInfoDto = new ExerciseInfoDto(
+                    exercise.getId(),
+                    exercise.getName(),
+                    exercise.getCategory());
+
+            exerciseInfoDtoList.add(exerciseInfoDto);
+        }
+
+
+        // 운동 상세 정보 맵핑
+        for (ExerciseInfoDto exerciseInfoDto : exerciseInfoDtoList) {
+
+            List<ExerciseDetailInfoDto> exerciseDetailInfoDtoList = new ArrayList<>();
+            for (RoutineExercise routineExercise : routine.getRoutineExerciseList()) {
+
+                if (!routineExercise.getExercise().getId().equals(exerciseInfoDto.getId())) continue;
+
+                exerciseDetailInfoDtoList.add(new ExerciseDetailInfoDto(
+                        routineExercise.getExerciseSet(),
+                        routineExercise.getCount(),
+                        routineExercise.getWeight()
+                ));
+            }
+
+            exerciseInfoDto.setExerciseDetailInfoList(exerciseDetailInfoDtoList);
+        }
+
+        return FindRoutineDetailDto.createRoutineDto(routine.getId(), routine.getName(), exerciseInfoDtoList);
+    }
 }

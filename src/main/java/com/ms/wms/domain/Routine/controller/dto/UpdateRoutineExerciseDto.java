@@ -6,7 +6,6 @@ import lombok.Getter;
 public class UpdateRoutineExerciseDto {
 
     private Long exerciseId;
-    private String exerciseName;
     private Integer exerciseSet;
     private Double weight;
     private Integer count;

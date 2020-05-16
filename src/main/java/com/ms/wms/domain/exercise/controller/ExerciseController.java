@@ -2,6 +2,7 @@ package com.ms.wms.domain.exercise.controller;
 
 import com.ms.wms.domain.exercise.application.ExerciseService;
 import com.ms.wms.domain.exercise.controller.dto.FindExerciseDetailDto;
+import com.ms.wms.domain.exercise.controller.dto.GroupedExerciseListDto;
 import com.ms.wms.domain.exercise.controller.dto.SaveExerciseDto;
 import com.ms.wms.domain.exercise.controller.dto.UpdateExerciseDto;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,11 @@ public class ExerciseController {
     @GetMapping("/find/{id}")
     public FindExerciseDetailDto findExercise(@AuthenticationPrincipal Long memberId, @PathVariable Long id) {
         return exerciseService.findExerciseById(memberId, id);
+    }
+
+    @GetMapping("/findList")
+    public GroupedExerciseListDto findExerciseList(@AuthenticationPrincipal Long memberId) {
+        return new GroupedExerciseListDto(exerciseService.findExerciseList(memberId));
     }
 
     @GetMapping("/findList/{name}")

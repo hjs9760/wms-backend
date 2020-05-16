@@ -20,11 +20,10 @@ public class FindExerciseDetailDto {
         this.category = category;
     }
 
-    public static List<FindExerciseDetailDto> convertFrom(List<Exercise> exerciseList) {
+    public static List<FindExerciseDetailDto> convertFindListExerciseDetailDto(List<Exercise> exerciseList) {
 
         return exerciseList.stream()
                 .map(exercise -> new FindExerciseDetailDto(exercise.getId(), exercise.getName(), exercise.getCategory()))
                 .collect(Collectors.toList());
     }
-
 }

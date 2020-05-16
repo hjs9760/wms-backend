@@ -10,13 +10,13 @@ public class FindRoutineDetailDto {
 
     private Long id;
     private String name;
-    private List<FindExerciseDetailInfoDto> exerciseDetailInfoList;
+    private List<ExerciseInfoDto> exerciseInfoList;
 
-    public static FindRoutineDetailDto createRoutineDto(Long id, String name, List<FindExerciseDetailInfoDto> findExerciseDetailInfoDtoDtoList) {
+    public static FindRoutineDetailDto createRoutineDto(Long id, String name, List<ExerciseInfoDto> exerciseInfoList) {
         FindRoutineDetailDto findRoutineDetailDto = new FindRoutineDetailDto();
         findRoutineDetailDto.id = id;
         findRoutineDetailDto.name = name;
-        findRoutineDetailDto.exerciseDetailInfoList = findExerciseDetailInfoDtoDtoList;
+        findRoutineDetailDto.exerciseInfoList = exerciseInfoList;
 
         return findRoutineDetailDto;
     }
