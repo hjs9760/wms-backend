@@ -7,6 +7,7 @@ import com.ms.wms.domain.history.controller.dto.HistoryDetailDto;
 import com.ms.wms.domain.history.controller.dto.SaveHistoryDto;
 import com.ms.wms.domain.history.domain.History;
 import com.ms.wms.domain.history.domain.HistoryRepository;
+import com.ms.wms.global.config.exception.business.NoExistException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +27,7 @@ public class HistoryService {
 
         for (SaveHistoryDto dto : historyDtoList) {
             Exercise exercise = exerciseRepository.findById(dto.getExerciseId())
-                    .orElseThrow(() -> new RuntimeException(("존재하지 않는 exercise 입니다.")));
+                    .orElseThrow(() -> new NoExistException(("존재하지 않는 exercise 입니다.")));
 
             historyList.add(History.createHistory(memberId, exercise, dto));
         }

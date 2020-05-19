@@ -40,9 +40,3 @@ spring:
           type:
             descriptor:  # SQL에서 물음표로 표기된 부분( bind parameter )을 로그로 출력해서 확인
               sql: TRACE
-
-slack:
-  webhook: https://hooks.slack.com/services/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
-
-
-
