@@ -6,19 +6,23 @@ import com.ms.wms.domain.exercise.controller.dto.SaveExerciseDto;
 import com.ms.wms.domain.exercise.controller.dto.UpdateExerciseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @RestController
 @RequestMapping("/exercise")
 @RequiredArgsConstructor
+@Validated
 public class ExerciseController {
 
     private final ExerciseService exerciseService;
 
     @PostMapping("/save")
-    public void saveExercise(@AuthenticationPrincipal Long memberId, @RequestBody SaveExerciseDto exerciseDto) {
+    public void saveExercise(@AuthenticationPrincipal Long memberId, @RequestBody @Valid SaveExerciseDto exerciseDto) {
         exerciseService.saveExercise(memberId, exerciseDto);
     }
 
@@ -27,13 +31,13 @@ public class ExerciseController {
         return exerciseService.findExerciseById(memberId, id);
     }
 
-    @GetMapping("/findList/{name}")
-    public List<FindExerciseDetailDto> findExerciseByName(@AuthenticationPrincipal Long memberId, @PathVariable String name) {
+    @PostMapping("/findList")
+        public List<FindExerciseDetailDto> findExerciseByName(@AuthenticationPrincipal Long memberId, @RequestParam @Size(min =1, message = "운동명은 빈값일 수 없습니다.") String name) {
         return exerciseService.findExerciseByName(memberId, name);
     }
 
     @PostMapping("/update")
-    public void updateExercise(@AuthenticationPrincipal Long memberId, @RequestBody UpdateExerciseDto updateExerciseDto) {
+    public void updateExercise(@AuthenticationPrincipal Long memberId, @RequestBody @Valid UpdateExerciseDto updateExerciseDto) {
         exerciseService.updateExercise(memberId, updateExerciseDto);
     }
 

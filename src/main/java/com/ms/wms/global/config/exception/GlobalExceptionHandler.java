@@ -22,9 +22,8 @@ public class GlobalExceptionHandler {
     private final SlackMessage slackMessage;
 
     /**
-     *  @Valid or @Validated 으로 binding error 발생시 발생
-     *  HttpMessageConverter 에서 등록한 HttpMessageConverter binding 못할경우 발생
-     *  ex.) @RequestBody
+     * @Valid 달린 인수에 대한 유효성 검사가 실패하면 예외가 발생
+     *
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     protected ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
@@ -34,11 +33,23 @@ public class GlobalExceptionHandler {
     }
 
     /**
+     *@PathVariable 부분에 다른 형이 들어올 경우 발생
+     */
+//    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+//    protected ResponseEntity<ErrorResponse> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException e) {
+//        log.error("handleMethodArgumentTypeMismatchException", e);
+//        slackMessage.sendSlackMessage(SlackChannel.CHANNEL_WMS, e.getMessage());
+//        final ErrorResponse response = ErrorResponse.of(ErrorCode.INVALID_INPUT_VALUE);
+//        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+//    }
+
+    /**
      * 운동, 루틴 조회시 조회결과가 없을 경우
      */
     @ExceptionHandler(NoExistException.class)
     protected ResponseEntity<ErrorResponse> handleNoExistException(NoExistException e) {
         log.error("NoExistException", e);
+        slackMessage.sendSlackMessage(SlackChannel.CHANNEL_WMS, e.getMessage());
         final ErrorResponse response = ErrorResponse.of(ErrorCode.NOT_FOUND_ROW, e.getMessage());
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
@@ -60,6 +71,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(UnAuthorityException.class)
     protected ResponseEntity<ErrorResponse> handleUnAuthorityException(UnAuthorityException e) {
         log.error("UnAuthorityException", e);
+        slackMessage.sendSlackMessage(SlackChannel.CHANNEL_WMS, e.getMessage());
         final ErrorResponse response = ErrorResponse.of(ErrorCode.MEMBER_ACCESS_DENIED, e.getMessage());
         return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
     }
@@ -71,7 +83,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     protected ResponseEntity<ErrorResponse> handleException(Exception e) {
         log.error("Exception!", e);
-        final ErrorResponse response = ErrorResponse.of(ErrorCode.INTERNAL_SERVER_ERROR);
+        final ErrorResponse response = ErrorResponse.of(ErrorCode.INTERNAL_SERVER_ERROR, e.getMessage());
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
