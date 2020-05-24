@@ -31,8 +31,10 @@ public class ExerciseController {
         return exerciseService.findExerciseById(memberId, id);
     }
 
-    @PostMapping("/findList")
-        public List<FindExerciseDetailDto> findExerciseByName(@AuthenticationPrincipal Long memberId, @RequestParam @Size(min =1, message = "운동명은 빈값일 수 없습니다.") String name) {
+    @GetMapping("/findList")
+        public List<FindExerciseDetailDto> findExerciseByName(@AuthenticationPrincipal Long memberId,
+                                                              @RequestParam @Size(min =1, message = "운동명은 빈값일 수 없습니다.") String name) {
+
         return exerciseService.findExerciseByName(memberId, name);
     }
 

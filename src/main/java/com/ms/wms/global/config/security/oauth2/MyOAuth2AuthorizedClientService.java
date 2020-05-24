@@ -1,11 +1,11 @@
 package com.ms.wms.global.config.security.oauth2;
 
+import com.ms.wms.domain.member.application.MemberJoinedEvent;
 import com.ms.wms.domain.member.domain.Member;
 import com.ms.wms.domain.member.domain.MemberRepository;
 import com.ms.wms.global.config.security.oauth2.custom.MyOAuth2User;
-import com.ms.wms.global.config.slack.SlackChannel;
-import com.ms.wms.global.config.slack.SlackMessage;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
@@ -18,15 +18,16 @@ import org.springframework.security.oauth2.core.OAuth2RefreshToken;
  * Github : http://github.com/momentjin
  */
 
+
+@RequiredArgsConstructor
 public class MyOAuth2AuthorizedClientService implements OAuth2AuthorizedClientService {
 
-    @Autowired
-    private MemberRepository memberRepository;
-    @Autowired
-    private SlackMessage slackMessage;
+    private final MemberRepository memberRepository;
+    private final ApplicationEventPublisher eventPublisher;
 
     @Override
     public void saveAuthorizedClient(OAuth2AuthorizedClient oAuth2AuthorizedClient, Authentication authentication) {
+
         String providerType = oAuth2AuthorizedClient.getClientRegistration().getRegistrationId();
         OAuth2AccessToken accessToken = oAuth2AuthorizedClient.getAccessToken();
         OAuth2RefreshToken refreshToken = oAuth2AuthorizedClient.getRefreshToken();
@@ -36,11 +37,10 @@ public class MyOAuth2AuthorizedClientService implements OAuth2AuthorizedClientSe
         String name = oauth2User.getAttribute("name");
 
         Member member = new Member(id, name, providerType, accessToken.getTokenValue(), refreshToken.getTokenValue());
+        oauth2User.dbPK  = member.getId();
         memberRepository.save(member);
 
-        slackMessage.sendSlackMessage(SlackChannel.CHANNEL_MEMBER,name+ " 님이 wms에 회원이 되었습니다.");
-
-        oauth2User.dbPK  = member.getId();
+        this.eventPublisher.publishEvent(new MemberJoinedEvent(member));
     }
 
     @Override
@@ -52,5 +52,4 @@ public class MyOAuth2AuthorizedClientService implements OAuth2AuthorizedClientSe
     public void removeAuthorizedClient(String s, String s1) {
         throw new UnsupportedOperationException(); // 아직 구현되지 않음
     }
-
 }

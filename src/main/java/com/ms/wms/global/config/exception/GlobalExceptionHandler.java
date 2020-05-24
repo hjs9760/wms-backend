@@ -1,8 +1,6 @@
 package com.ms.wms.global.config.exception;
 
-import com.ms.wms.global.config.exception.business.DuplicateException;
-import com.ms.wms.global.config.exception.business.NoExistException;
-import com.ms.wms.global.config.exception.business.UnAuthorityException;
+import com.ms.wms.global.config.exception.business.BusinessException;
 import com.ms.wms.global.config.slack.SlackChannel;
 import com.ms.wms.global.config.slack.SlackMessage;
 import lombok.RequiredArgsConstructor;
@@ -33,47 +31,13 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     *@PathVariable 부분에 다른 형이 들어올 경우 발생
+     * 비즈니스 요규사항 예외
      */
-//    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-//    protected ResponseEntity<ErrorResponse> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException e) {
-//        log.error("handleMethodArgumentTypeMismatchException", e);
-//        slackMessage.sendSlackMessage(SlackChannel.CHANNEL_WMS, e.getMessage());
-//        final ErrorResponse response = ErrorResponse.of(ErrorCode.INVALID_INPUT_VALUE);
-//        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-//    }
+    @ExceptionHandler(BusinessException.class)
+    protected  ResponseEntity<ErrorResponse> handleBusinessException(BusinessException e) {
 
-    /**
-     * 운동, 루틴 조회시 조회결과가 없을 경우
-     */
-    @ExceptionHandler(NoExistException.class)
-    protected ResponseEntity<ErrorResponse> handleNoExistException(NoExistException e) {
-        log.error("NoExistException", e);
-        slackMessage.sendSlackMessage(SlackChannel.CHANNEL_WMS, e.getMessage());
-        final ErrorResponse response = ErrorResponse.of(ErrorCode.NOT_FOUND_ROW, e.getMessage());
-        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
-    }
-
-    /**
-     * 운동, 루틴 등록시 중복된 운동명, 루틴명이 있을 경우
-     */
-    @ExceptionHandler(DuplicateException.class)
-    protected ResponseEntity<ErrorResponse> handleDuplicateException(DuplicateException e) {
-        log.error("DuplicateException", e);
-        slackMessage.sendSlackMessage(SlackChannel.CHANNEL_WMS, e.getMessage());
-        final ErrorResponse response = ErrorResponse.of(ErrorCode.Duplicate_ROW, e.getMessage());
-        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
-    }
-
-    /**
-     * 잡근 권한이 없는 유저가 접근시
-     */
-    @ExceptionHandler(UnAuthorityException.class)
-    protected ResponseEntity<ErrorResponse> handleUnAuthorityException(UnAuthorityException e) {
-        log.error("UnAuthorityException", e);
-        slackMessage.sendSlackMessage(SlackChannel.CHANNEL_WMS, e.getMessage());
-        final ErrorResponse response = ErrorResponse.of(ErrorCode.MEMBER_ACCESS_DENIED, e.getMessage());
-        return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+        final ErrorResponse response = ErrorResponse.of(e.getErrorCode(), e.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
     /**
@@ -83,6 +47,9 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     protected ResponseEntity<ErrorResponse> handleException(Exception e) {
         log.error("Exception!", e);
+
+        slackMessage.sendSlackMessage(SlackChannel.CHANNEL_WMS, e.getMessage());
+
         final ErrorResponse response = ErrorResponse.of(ErrorCode.INTERNAL_SERVER_ERROR, e.getMessage());
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }

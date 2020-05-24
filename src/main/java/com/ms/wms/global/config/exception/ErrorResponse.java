@@ -13,16 +13,14 @@ import java.util.stream.Collectors;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ErrorResponse {
 
-    private String message;
-    private int status;
-    private List<FieldError> errors;
     private String code;
+    private String message;
+    private List<FieldError> errors;
 
-    public static ErrorResponse of(ErrorCode errorCode, BindingResult result) {
+        public static ErrorResponse of(ErrorCode errorCode, BindingResult result) {
         ErrorResponse errorResponse = new ErrorResponse();
 
         errorResponse.message = errorCode.getMessage();
-        errorResponse.status = errorCode.getStatus();
         errorResponse.code = errorCode.getCode();
 
         errorResponse.errors = result.getFieldErrors().stream()
@@ -36,7 +34,6 @@ public class ErrorResponse {
         ErrorResponse errorResponse = new ErrorResponse();
 
         errorResponse.message = message;
-        errorResponse.status = errorCode.getStatus();
         errorResponse.code = errorCode.getCode();
 
         return errorResponse;
@@ -46,7 +43,6 @@ public class ErrorResponse {
         ErrorResponse errorResponse = new ErrorResponse();
 
         errorResponse.message = errorCode.getMessage();
-        errorResponse.status = errorCode.getStatus();
         errorResponse.code = errorCode.getCode();
 
         return errorResponse;

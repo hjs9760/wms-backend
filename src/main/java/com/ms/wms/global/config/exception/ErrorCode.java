@@ -6,28 +6,25 @@ import lombok.Getter;
 public enum ErrorCode {
 
     // Common
-    INVALID_INPUT_VALUE(400, "C001", "Binding Error"),
-    INTERNAL_SERVER_ERROR(500, "C002"),
-    NOT_FOUND_ROW(404, "C003"),
-    Duplicate_ROW(409, "C004"),
+    INVALID_INPUT_VALUE( "C001", "Binding Error"),
+    INTERNAL_SERVER_ERROR( "C002"),
+    NOT_FOUND_ROW("C003"),
+    DUPLICATE_ROW( "C004"),
 
     // Member
-    MEMBER_ACCESS_DENIED(403, "C100");
+    MEMBER_ACCESS_DENIED( "C100");
 
-    private int status;
     private String code;
     private String message;
 
     // default exception
-    ErrorCode(int status, String code, String message) {
-        this.status = status;
+    ErrorCode(String code, String message) {
         this.code = code;
         this.message = message;
     }
 
     // custom exception
-    ErrorCode(int status, String code) {
-        this.status = status;
+    ErrorCode(String code) {
         this.code = code;
     }
 }
