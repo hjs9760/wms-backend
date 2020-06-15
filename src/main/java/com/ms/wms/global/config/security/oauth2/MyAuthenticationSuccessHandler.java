@@ -17,9 +17,7 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
 
         MyOAuth2User oAuth2User = (MyOAuth2User) authentication.getPrincipal();
 
-        Long oauth2UserId = Long.parseLong(oAuth2User.getName());
-
-        String jwt = WmsJWTGenerator.generate(oAuth2User.dbPK);
+        String jwt = WmsJWTGenerator.generate(oAuth2User.dbPK, oAuth2User.email);
 
         response.setStatus(200);
         response.getWriter().write(jwt);

@@ -3,6 +3,7 @@ package com.ms.wms.global.config.security.oauth2;
 import com.ms.wms.domain.member.application.MemberJoinedEvent;
 import com.ms.wms.domain.member.domain.Member;
 import com.ms.wms.domain.member.domain.MemberRepository;
+import com.ms.wms.domain.member.domain.Role;
 import com.ms.wms.global.config.security.oauth2.custom.MyOAuth2User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
@@ -11,12 +12,6 @@ import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.OAuth2RefreshToken;
-
-
-/**
- * Created by momentjin@gmail.com on 2019-12-11
- * Github : http://github.com/momentjin
- */
 
 
 @RequiredArgsConstructor
@@ -35,21 +30,25 @@ public class MyOAuth2AuthorizedClientService implements OAuth2AuthorizedClientSe
         MyOAuth2User oauth2User = (MyOAuth2User) authentication.getPrincipal();
         String id = oauth2User.getName();
         String name = oauth2User.getAttribute("name");
+        String email = oauth2User.getAttribute("email");
 
-        Member member = new Member(id, name, providerType, accessToken.getTokenValue(), refreshToken.getTokenValue());
-        oauth2User.dbPK  = member.getId();
+        Member member = new Member(email, id, name, providerType, accessToken.getTokenValue(), refreshToken.getTokenValue(),
+                                    email.equals("jungsun9760@naver.com") ? Role.ROLE_ADMIN : Role.ROLE_USER);
+
         memberRepository.save(member);
+        oauth2User.dbPK  = member.getId();
+        oauth2User.email  = member.getEmail();
 
         this.eventPublisher.publishEvent(new MemberJoinedEvent(member));
     }
 
     @Override
-    public <T extends OAuth2AuthorizedClient> T loadAuthorizedClient(String s, String s1) {
-        throw new UnsupportedOperationException(); // 아직 구현되지음 않음
+    public void removeAuthorizedClient(String clientRegistrationId, String principalName) {
+        throw new UnsupportedOperationException(); // 미구현
     }
 
     @Override
-    public void removeAuthorizedClient(String s, String s1) {
-        throw new UnsupportedOperationException(); // 아직 구현되지 않음
+    public <T extends OAuth2AuthorizedClient> T loadAuthorizedClient(String s, String s1) {
+        throw new UnsupportedOperationException(); // 미구현
     }
 }

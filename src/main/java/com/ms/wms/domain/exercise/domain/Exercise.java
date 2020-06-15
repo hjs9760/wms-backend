@@ -22,7 +22,6 @@ public class Exercise {
 
     @Enumerated(EnumType.STRING)
     @Column
-    @Setter
     private Category category;
 
     @Setter

@@ -13,7 +13,7 @@ import java.util.Map;
 public class KakaoOAuth2User extends MyOAuth2User {
 
     private String id;
-    private KakaoProperties properties;
+    private KakaoAccount kakao_account;
 
     @Override
     public Map<String, Object> getAttributes() {
@@ -21,7 +21,8 @@ public class KakaoOAuth2User extends MyOAuth2User {
         Map<String, Object> attrs = new HashMap<>();
 
         attrs.put("id", this.id);
-        attrs.put("name", this.properties.getNickname());
+        attrs.put("name", this.kakao_account.getProfile().getNickname());
+        attrs.put("email", this.kakao_account.getEmail());
 
         return attrs;
     }
@@ -39,6 +40,12 @@ public class KakaoOAuth2User extends MyOAuth2User {
     @Getter
     private static class KakaoProperties {
         private String nickname;
+    }
+
+    @Getter
+    private static class KakaoAccount {
+        private String email;
+        private KakaoProperties profile;
     }
 
 

@@ -7,12 +7,12 @@ public enum ErrorCode {
 
     // Common
     INVALID_INPUT_VALUE( "C001", "Binding Error"),
-    INTERNAL_SERVER_ERROR( "C002"),
+    INTERNAL_SERVER_ERROR("C002"),
     NOT_FOUND_ROW("C003"),
-    DUPLICATE_ROW( "C004"),
+    DUPLICATE_ROW("C004"),
 
     // Member
-    MEMBER_ACCESS_DENIED( "C100");
+    MEMBER_ACCESS_DENIED("C100");
 
     private String code;
     private String message;

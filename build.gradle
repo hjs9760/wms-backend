@@ -60,6 +60,7 @@ querydsl {
     querydslSourcesDir = querydslDir
 }
 
+// 컴파일과 함께 실행되는 소스 파일들의 그룹(자바코드와 QClass파일이 같이 컴파일되도록 설정)
 sourceSets {
     main {
         java {

@@ -3,7 +3,6 @@ package com.ms.wms.domain.history.domain;
 import com.ms.wms.domain.exercise.domain.QExercise;
 import com.ms.wms.domain.statistics.controller.dto.StatisticsDetailDto;
 import com.ms.wms.domain.statistics.controller.dto.StatisticsDetailInfoDto;
-import com.querydsl.core.types.ConstantImpl;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.StringTemplate;
@@ -23,7 +22,7 @@ public class HistoryRepositoryImpl extends QuerydslRepositorySupport implements 
         StringTemplate formattedDate = Expressions.stringTemplate(
                 "DATE_FORMAT({0}, {1})"
                 , endDate
-                , ConstantImpl.create("%Y-%m-%d"));
+                , "%Y-%m-%d");
 
         QHistory qHistory = QHistory.history;
         QExercise qExercise = QExercise.exercise;

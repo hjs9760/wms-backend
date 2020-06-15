@@ -19,6 +19,8 @@ public class NaverOAuth2User extends MyOAuth2User {
         Map<String, Object> attrs = new HashMap<>();
         attrs.put("id", this.response.getId());
         attrs.put("name", this.response.getName());
+        attrs.put("email", this.response.getEmail());
+
 
         return attrs;
     }
@@ -37,5 +39,6 @@ public class NaverOAuth2User extends MyOAuth2User {
     public static class NaverProperties {
         private String id;
         private String name;
+        private String email;
     }
 }
