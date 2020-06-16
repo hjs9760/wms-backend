@@ -15,7 +15,7 @@ import org.springframework.security.web.access.expression.DefaultWebSecurityExpr
 import org.springframework.security.web.access.expression.WebExpressionVoter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -31,9 +31,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // 요청에 대한 권한을 지정
         http.authorizeRequests()
                 .antMatchers("/oauth2/**").permitAll()
-                .antMatchers("/login/**").permitAll()
-                .antMatchers("/exercise/**").hasRole("USER")
-                .antMatchers("/routine/**").hasRole("ADMIN")
                 // 인증이 되어야 한다
                 .anyRequest().authenticated()
                 .accessDecisionManager(accessDecisionManager())  // 인증이 완료된 사용자가 리소스에 접근하려고 할때 해당 요청을 허용할것인지 판단하는 클래스(==인가)
@@ -68,7 +65,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         WebExpressionVoter webExpressionVoter =  new WebExpressionVoter();
         webExpressionVoter.setExpressionHandler(handler);
 
-        List<AccessDecisionVoter<? extends Object>> voterList = Arrays.asList(webExpressionVoter);
+        List<AccessDecisionVoter<? extends Object>> voterList = Collections.singletonList(webExpressionVoter);
         return new MyAffirmativeBased(voterList);
 
     }
