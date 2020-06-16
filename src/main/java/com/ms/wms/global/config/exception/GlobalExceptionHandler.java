@@ -1,10 +1,9 @@
 package com.ms.wms.global.config.exception;
 
 import com.ms.wms.global.config.exception.business.BusinessException;
-import com.ms.wms.global.config.slack.SlackChannel;
-import com.ms.wms.global.config.slack.SlackMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -17,7 +16,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @Slf4j
 public class GlobalExceptionHandler {
 
-    private final SlackMessage slackMessage;
+    private final ApplicationEventPublisher eventPublisher;
 
     /**
      * @Valid 달린 인수에 대한 유효성 검사가 실패하면 예외가 발생
@@ -35,7 +34,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(BusinessException.class)
     protected  ResponseEntity<ErrorResponse> handleBusinessException(BusinessException e) {
-
+        log.error("BusinessException", e);
         final ErrorResponse response = ErrorResponse.of(e.getErrorCode(), e.getMessage());
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
@@ -48,7 +47,7 @@ public class GlobalExceptionHandler {
     protected ResponseEntity<ErrorResponse> handleException(Exception e) {
         log.error("Exception!", e);
 
-        slackMessage.sendSlackMessage(SlackChannel.CHANNEL_WMS, e.getMessage());
+        eventPublisher.publishEvent(e);
 
         final ErrorResponse response = ErrorResponse.of(ErrorCode.INTERNAL_SERVER_ERROR, e.getMessage());
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);

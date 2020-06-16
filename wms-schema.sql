@@ -28,6 +28,7 @@ create table member
     oauth_id      varchar(255),
     provider_name varchar(255),
     refresh_token varchar(255),
+    role varchar(255),
     primary key (member_id)
 ) engine = InnoDB;
 

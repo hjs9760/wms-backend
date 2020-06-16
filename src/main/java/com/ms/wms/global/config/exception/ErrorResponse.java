@@ -39,15 +39,6 @@ public class ErrorResponse {
         return errorResponse;
     }
 
-    public static ErrorResponse of(ErrorCode errorCode) {
-        ErrorResponse errorResponse = new ErrorResponse();
-
-        errorResponse.message = errorCode.getMessage();
-        errorResponse.code = errorCode.getCode();
-
-        return errorResponse;
-    }
-
     @Getter
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     @AllArgsConstructor
