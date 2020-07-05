@@ -20,8 +20,7 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
         String jwt = WmsJWTGenerator.generate(oAuth2User.dbPK, oAuth2User.email);
 
         response.setStatus(200);
-        response.getWriter().write(jwt);
-        response.getWriter().flush();
-        response.getWriter().close();
+        // todo : proerty로 변경하기
+        response.sendRedirect("localhost:5000/oauth-callback?token="+jwt);
     }
 }
