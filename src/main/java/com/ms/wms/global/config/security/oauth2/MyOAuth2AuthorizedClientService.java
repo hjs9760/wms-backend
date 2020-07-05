@@ -1,6 +1,7 @@
 package com.ms.wms.global.config.security.oauth2;
 
 import com.ms.wms.domain.member.application.MemberJoinedEvent;
+import com.ms.wms.domain.member.application.OAuth2MemberJoinService;
 import com.ms.wms.domain.member.domain.Member;
 import com.ms.wms.domain.member.domain.MemberRepository;
 import com.ms.wms.domain.member.domain.Role;
@@ -13,12 +14,13 @@ import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.OAuth2RefreshToken;
 
+import java.util.Optional;
+
 
 @RequiredArgsConstructor
 public class MyOAuth2AuthorizedClientService implements OAuth2AuthorizedClientService {
 
-    private final MemberRepository memberRepository;
-    private final ApplicationEventPublisher eventPublisher;
+    private final OAuth2MemberJoinService oAuth2MemberJoinService;
 
     @Override
     public void saveAuthorizedClient(OAuth2AuthorizedClient oAuth2AuthorizedClient, Authentication authentication) {
@@ -32,14 +34,10 @@ public class MyOAuth2AuthorizedClientService implements OAuth2AuthorizedClientSe
         String name = oauth2User.getAttribute("name");
         String email = oauth2User.getAttribute("email");
 
-        Member member = new Member(email, id, name, providerType, accessToken.getTokenValue(), refreshToken.getTokenValue(),
-                                    email.equals("jungsun9760@naver.com") ? Role.ROLE_ADMIN : Role.ROLE_USER);
+        Member joinedMember = oAuth2MemberJoinService.join(email, id, name, providerType, accessToken.getTokenValue(), refreshToken.getTokenValue());
 
-        memberRepository.save(member);
-        oauth2User.dbPK  = member.getId();
-        oauth2User.email  = member.getEmail();
-
-        this.eventPublisher.publishEvent(new MemberJoinedEvent(member));
+        oauth2User.dbPK = joinedMember.getId();
+        oauth2User.email = joinedMember.getEmail();
     }
 
     @Override

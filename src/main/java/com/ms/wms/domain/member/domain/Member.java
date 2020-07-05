@@ -51,4 +51,9 @@ public class Member {
         this.role = role;
     }
 
+    public void updateOauth2Info(String accessToken, String refreshToken) {
+        this.accessToken = accessToken;
+        this.refreshToken = refreshToken;
+    }
+
 }

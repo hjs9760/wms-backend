@@ -36,7 +36,7 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
         String token = req.getHeader("Authorization");
         if (token == null || token.isEmpty()) {
-            throw new UnAuthorityException("No permission");
+                throw new UnAuthorityException("No permission");
         }
 
         // 인증하기 위한 토큰(id, pw)

@@ -1,5 +1,6 @@
 package com.ms.wms.global.config.security.oauth2;
 
+import com.ms.wms.domain.member.application.OAuth2MemberJoinService;
 import com.ms.wms.domain.member.domain.MemberRepository;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
@@ -17,8 +18,8 @@ import java.util.List;
 public class MyOAuth2Config {
 
     @Bean
-    public OAuth2AuthorizedClientService authorizedClientService(MemberRepository memberRepository, ApplicationEventPublisher eventPublisher) {
-            return new MyOAuth2AuthorizedClientService(memberRepository, eventPublisher);
+    public OAuth2AuthorizedClientService authorizedClientService(OAuth2MemberJoinService oAuth2MemberJoinService) {
+            return new MyOAuth2AuthorizedClientService(oAuth2MemberJoinService);
     }
 
     /**
