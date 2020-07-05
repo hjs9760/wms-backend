@@ -47,4 +47,9 @@ public class ExerciseController {
     public void removeExercise(@AuthenticationPrincipal Long memberId, @PathVariable Long id) {
         exerciseService.removeExercise(memberId, id);
     }
+
+    @GetMapping("/findMyList")
+    public List<FindExerciseDetailDto> findExerciseByMemberId(@AuthenticationPrincipal Long memberId) {
+        return exerciseService.findExerciseByMemberId(memberId);
+    }
 }

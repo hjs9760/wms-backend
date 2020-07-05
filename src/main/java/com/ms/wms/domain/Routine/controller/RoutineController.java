@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @RestController
 @RequestMapping("/routine")
@@ -35,5 +37,10 @@ public class RoutineController {
     @PostMapping("/{routineId}")
     public void removeRoutine(@AuthenticationPrincipal Long memberId, @PathVariable Long routineId) {
         routineService.removeRoutine(memberId, routineId);
+    }
+
+    @GetMapping("/findList")
+    public List<FindRoutineDetailDto> findMyRoutine(@AuthenticationPrincipal Long memberId) {
+        return routineService.findMyRoutine(memberId);
     }
 }

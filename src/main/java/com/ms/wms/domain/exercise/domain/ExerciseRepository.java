@@ -12,4 +12,5 @@ public interface ExerciseRepository extends JpaRepository<Exercise, Long> {
     List<Exercise> findByNameContainingAndMemberId(String name, Long memberId);
     List<Exercise> findByCategoryAndMemberId(Category category, Long memberId);
     void deleteByIdAndMemberId(Long id, Long memberId);
+    List<Exercise> findExerciseByMemberId(Long memberId);
 }

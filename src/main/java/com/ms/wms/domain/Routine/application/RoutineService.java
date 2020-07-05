@@ -92,4 +92,33 @@ public class RoutineService {
         routineRepository.deleteByIdAndMemberId(routineId, memberId);
     }
 
+    public List<FindRoutineDetailDto> findMyRoutine(Long memberId) {
+        List<Routine> routineList = routineRepository.findByMemberId(memberId);
+
+        List<FindExerciseDetailInfoDto> findExerciseDetailInfoList = new ArrayList<>();
+
+        List<FindRoutineDetailDto> findRoutineDetailDtoList = new ArrayList<>();
+
+        for(Routine routine: routineList) {
+            if (!memberId.equals(routine.getMemberId())) {
+                throw new UnAuthorityException("No permission");
+            }
+
+            List<RoutineExercise> routineExerciseList = routine.getRoutineExerciseList();
+
+            for (RoutineExercise routineExercise : routineExerciseList) {
+                FindExerciseDetailInfoDto findExerciseDetailInfo = FindExerciseDetailInfoDto.createFindExerciseDetailInfo(routineExercise.getExercise().getId()
+                        , routineExercise.getExercise().getName()
+                        , routineExercise.getExercise().getCategory()
+                        , routineExercise.getCount()
+                        , routineExercise.getWeight()
+                        , routineExercise.getExerciseSet());
+                findExerciseDetailInfoList.add(findExerciseDetailInfo);
+            }
+
+            findRoutineDetailDtoList.add(FindRoutineDetailDto.createRoutineDto(routine.getId(), routine.getName(), findExerciseDetailInfoList));
+        }
+
+        return findRoutineDetailDtoList;
+    }
 }

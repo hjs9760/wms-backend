@@ -66,4 +66,17 @@ public class ExerciseService {
         exerciseRepository.deleteByIdAndMemberId(id, memberId);
     }
 
+    public List<FindExerciseDetailDto> findExerciseByMemberId(Long memberId) {
+        List<Exercise> exerciseList = exerciseRepository.findExerciseByMemberId(memberId);
+
+        for(Exercise exercise : exerciseList) {
+            if (!memberId.equals(exercise.getMemberId())) {
+                throw new UnAuthorityException("No permission");
+            }
+        }
+
+        List<FindExerciseDetailDto> dtoList = FindExerciseDetailDto.convertFrom(exerciseList);
+
+        return dtoList;
+    }
 }
