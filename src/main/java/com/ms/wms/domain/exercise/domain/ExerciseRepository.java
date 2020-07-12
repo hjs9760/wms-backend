@@ -9,8 +9,8 @@ import java.util.List;
 public interface ExerciseRepository extends JpaRepository<Exercise, Long> {
 
     List<Exercise> findByNameAndMemberId(String name, Long memberId);
-    List<Exercise> findByNameContainingAndMemberId(String name, Long memberId);
     List<Exercise> findByCategoryAndMemberId(Category category, Long memberId);
     void deleteByIdAndMemberId(Long id, Long memberId);
     List<Exercise> findExerciseByMemberId(Long memberId);
+    List<Exercise> findAllByMemberId(Long memberId);
 }
