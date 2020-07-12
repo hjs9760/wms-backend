@@ -29,11 +29,6 @@ public class RoutineController {
         routineService.updateRoutine(memberId, updateRoutineDto);
     }
 
-    @GetMapping("/find/{routineId}")
-    public FindRoutineDetailDto findRoutine(@AuthenticationPrincipal Long memberId, @PathVariable Long routineId) {
-        return routineService.findRoutine(memberId, routineId);
-    }
-
     @PostMapping("/{routineId}")
     public void removeRoutine(@AuthenticationPrincipal Long memberId, @PathVariable Long routineId) {
         routineService.removeRoutine(memberId, routineId);

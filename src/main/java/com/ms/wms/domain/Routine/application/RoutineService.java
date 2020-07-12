@@ -64,30 +64,6 @@ public class RoutineService {
         routine.updateRoutineInfo(updateRoutineDto.getName(), routineExerciseList);
     }
 
-    public FindRoutineDetailDto findRoutine(Long memberId, Long routineId) {
-        Routine routine = routineRepository.findById(routineId)
-                .orElseThrow(() -> new NoExistException(("존재하지 않는 routine 입니다.")));
-
-        if(!memberId.equals(routine.getMemberId())) {
-            throw new UnAuthorityException("No permission");
-        }
-        List<RoutineExercise> routineExerciseList = routine.getRoutineExerciseList();
-
-        List<FindExerciseDetailInfoDto> findExerciseDetailInfoList = new ArrayList<>();
-
-        for(RoutineExercise routineExercise : routineExerciseList) {
-            FindExerciseDetailInfoDto findExerciseDetailInfo = FindExerciseDetailInfoDto.createFindExerciseDetailInfo(routineExercise.getExercise().getId()
-                    , routineExercise.getExercise().getName()
-                    , routineExercise.getExercise().getCategory()
-                    , routineExercise.getCount()
-                    , routineExercise.getWeight()
-                    , routineExercise.getExerciseSet());
-            findExerciseDetailInfoList.add(findExerciseDetailInfo);
-        }
-
-        return FindRoutineDetailDto.createRoutineDto(routine.getId(), routine.getName(), findExerciseDetailInfoList);
-    }
-
     public void removeRoutine(Long memberId, Long routineId) {
         routineRepository.deleteByIdAndMemberId(routineId, memberId);
     }
@@ -105,18 +81,38 @@ public class RoutineService {
             }
 
             List<RoutineExercise> routineExerciseList = routine.getRoutineExerciseList();
+            List<RoutineExerciseDetailDto> dtoList = new ArrayList<>();
+            FindExerciseDetailInfoDto findExerciseDetailInfo = new FindExerciseDetailInfoDto();
 
             for (RoutineExercise routineExercise : routineExerciseList) {
-                FindExerciseDetailInfoDto findExerciseDetailInfo = FindExerciseDetailInfoDto.createFindExerciseDetailInfo(routineExercise.getExercise().getId()
-                        , routineExercise.getExercise().getName()
-                        , routineExercise.getExercise().getCategory()
-                        , routineExercise.getCount()
-                        , routineExercise.getWeight()
-                        , routineExercise.getExerciseSet());
-                findExerciseDetailInfoList.add(findExerciseDetailInfo);
+                // 첫 운동
+                if(routineExerciseList.indexOf(routineExercise) == 0) {
+                    findExerciseDetailInfo = FindExerciseDetailInfoDto.createExerciseInfo(routineExercise.getExercise().getId(), routineExercise.getExercise().getName(),routineExercise.getExercise().getCategory());
+                    dtoList.add(RoutineExerciseDetailDto.createRoutineExerciseDto(routineExercise.getCount(), routineExercise.getWeight(),routineExercise.getExerciseSet()));
+                } else {
+                    // 이전 운동과 같은 운동일 떄
+                    if(routineExercise.getExercise().getId() == findExerciseDetailInfo.getExerciseId()){
+                        dtoList.add(RoutineExerciseDetailDto.createRoutineExerciseDto(routineExercise.getCount(), routineExercise.getWeight(),routineExercise.getExerciseSet()));
+                    }
+                    // 새로운 운동 일떄
+                    else {
+                        findExerciseDetailInfoList.add(FindExerciseDetailInfoDto.createFindExerciseDetailInfo(findExerciseDetailInfo, dtoList));
+//                        dtoList.removeAll(dtoList);
+                        dtoList = new ArrayList<>();
+                        findExerciseDetailInfo = FindExerciseDetailInfoDto.createExerciseInfo(routineExercise.getExercise().getId(), routineExercise.getExercise().getName(),routineExercise.getExercise().getCategory());
+                        dtoList.add(RoutineExerciseDetailDto.createRoutineExerciseDto(routineExercise.getCount(), routineExercise.getWeight(),routineExercise.getExerciseSet()));
+                    }
+                }
+
+                // 마지막 운동정보(routineExercise)일 떄
+                if(routineExerciseList.indexOf(routineExercise) == routineExerciseList.size()-1) {
+                    findExerciseDetailInfoList.add(FindExerciseDetailInfoDto.createFindExerciseDetailInfo(findExerciseDetailInfo, dtoList));
+                    dtoList = new ArrayList<>();
+                    findRoutineDetailDtoList.add(FindRoutineDetailDto.createRoutineDto(routine.getId(), routine.getName(), findExerciseDetailInfoList));
+                    findExerciseDetailInfoList = new ArrayList<>();
+                }
             }
 
-            findRoutineDetailDtoList.add(FindRoutineDetailDto.createRoutineDto(routine.getId(), routine.getName(), findExerciseDetailInfoList));
         }
 
         return findRoutineDetailDtoList;
