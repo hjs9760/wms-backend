@@ -15,6 +15,6 @@ public class UpdateExerciseDto {
     @NotBlank(message = "운동명은 Null 또는 빈값일 수 없습니다.")
     private String name;
 
-    @NotBlank(message = "운동명은 Null값일 수 없습니다.")
+    @NotNull(message = "운동명은 Null값일 수 없습니다.")
     private Category category;
 }
