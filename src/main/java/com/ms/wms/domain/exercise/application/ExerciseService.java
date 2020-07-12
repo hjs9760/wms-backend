@@ -43,9 +43,8 @@ public class ExerciseService {
         return findExerciseDetailDto;
     }
 
-    public List<FindExerciseDetailDto> findExerciseByName(Long memberId, String name) {
-        List<Exercise> exerciseList = exerciseRepository.findByNameContainingAndMemberId(name, memberId);
-
+    public List<FindExerciseDetailDto> findExercise(Long memberId) {
+        List<Exercise> exerciseList = exerciseRepository.findAllByMemberId(memberId);
         List<FindExerciseDetailDto> findExerciseDetailDtoList = FindExerciseDetailDto.convertFrom(exerciseList);
         return findExerciseDetailDtoList;
     }
@@ -62,6 +61,7 @@ public class ExerciseService {
         exercise.updateInfo(updateExerciseDto.getName(), updateExerciseDto.getCategory());
     }
 
+    @Transactional
     public void removeExercise(Long memberId, Long id) {
         exerciseRepository.deleteByIdAndMemberId(id, memberId);
     }
