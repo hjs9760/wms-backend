@@ -13,11 +13,6 @@ public class CategoryDto {
     private String key;
     private String value;
 
-    public CategoryDto(String key, String value) {
-        this.key = key;
-        this.value = value;
-    }
-
     public CategoryDto(Category category) {
         this.key = category.name();
         this.value = category.getName();

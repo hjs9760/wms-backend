@@ -1,5 +1,8 @@
 package com.ms.wms.domain.exercise.domain;
 
+import lombok.Getter;
+
+@Getter
 public enum Category {
 
     SHOULDER("어깨")
@@ -14,4 +17,7 @@ public enum Category {
     Category(String name) {
         this.name = name;
     }
+
 }
+
+
