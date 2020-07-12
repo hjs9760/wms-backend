@@ -3,25 +3,32 @@ package com.ms.wms.domain.routine.controller.dto;
 import com.ms.wms.domain.exercise.domain.Category;
 import lombok.Getter;
 
+import java.util.List;
+
 @Getter
 public class FindExerciseDetailInfoDto {
 
     private Long exerciseId;
     private String name;
     private Category category;
-    private Integer count;
-    private Double weight;
-    private Integer exerciseSet;
+    private List<RoutineExerciseDetailDto> routineExerciseDtoList;
 
-    public static FindExerciseDetailInfoDto createFindExerciseDetailInfo(Long exerciseId, String name, Category category, int count, Double weight, int exerciseSet) {
+    public static FindExerciseDetailInfoDto createFindExerciseDetailInfo(FindExerciseDetailInfoDto dto, List<RoutineExerciseDetailDto> dtoList) {
         FindExerciseDetailInfoDto findExerciseDetailInfoDto = new FindExerciseDetailInfoDto();
-        findExerciseDetailInfoDto.exerciseId = exerciseId;
-        findExerciseDetailInfoDto.name = name;
-        findExerciseDetailInfoDto.category = category;
-        findExerciseDetailInfoDto.count = count;
-        findExerciseDetailInfoDto.weight = weight;
-        findExerciseDetailInfoDto.exerciseSet = exerciseSet;
+        findExerciseDetailInfoDto.exerciseId = dto.exerciseId;
+        findExerciseDetailInfoDto.name = dto.name;
+        findExerciseDetailInfoDto.category = dto.category;
+        findExerciseDetailInfoDto.routineExerciseDtoList = dtoList;
 
         return findExerciseDetailInfoDto;
+    }
+
+    public static FindExerciseDetailInfoDto createExerciseInfo(Long id, String name, Category category) {
+        FindExerciseDetailInfoDto dto = new FindExerciseDetailInfoDto();
+        dto.exerciseId = id;
+        dto.name = name;
+        dto.category = category;
+
+        return dto;
     }
 }

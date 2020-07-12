@@ -19,7 +19,7 @@ public class MemberService {
         Member member =  memberRepository.findById(memberId)
                 .orElseThrow(() -> new NoExistException("존재하지 않는 회원 입니다."));
 
-        return MemberDetailDto.createMemberDetailDto(member.getEmail(), member.getName(), member.getRole());
+        return MemberDetailDto.createMemberDetailDto(member.getId(), member.getEmail(), member.getName(), member.getRole());
     }
 
 }
