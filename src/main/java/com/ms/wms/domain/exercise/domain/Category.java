@@ -12,14 +12,9 @@ public enum Category {
     , Bicep("이두")
     , Tricep("삼두");
 
-
     private String name;
 
     Category(String name) {
         this.name = name;
-    }
-
-    public String getName(String name) {
-        return name;
     }
 }
