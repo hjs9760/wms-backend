@@ -47,7 +47,7 @@ public class RoutineService {
         Routine routine = routineRepository.findById(updateRoutineDto.getRoutineId())
                 .orElseThrow(() -> new NoExistException(("존재하지 않는 routine 입니다.")));
 
-        List<UpdateRoutineExerciseDto> dtoList = updateRoutineDto.getUpdateRoutineExerciseDtoList();
+        List<UpdateRoutineExerciseDto> dtoList = updateRoutineDto.getUpdateRoutineExerciseList();
         List<RoutineExercise> routineExerciseList = new ArrayList<>();
         for (UpdateRoutineExerciseDto dto  : dtoList) {
             Exercise exercise = exerciseRepository.findById(dto.getExerciseId())

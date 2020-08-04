@@ -1,36 +1,29 @@
 package com.ms.wms.domain.history.controller.dto;
 
-import com.ms.wms.domain.exercise.domain.Category;
 import com.ms.wms.domain.history.domain.History;
 import lombok.Getter;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 public class HistoryDetailDto {
 
-    private Long historyId;
-    private Long exerciseId;
-    private Category category;
-    private String exerciseName;
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
-    private Integer exerciseSet;
-    private Double weight;
-    private Integer count;
+    private TotalExerciseKind totalExerciseKind; // 총 운동 갯수(카테고리별)
+    private HistoryAggregateInfo historyAggregateInfo; // 가장 많게,적게 한 운동
+    private HistoryDetailByDateDto historyDetailList; // 일별 운동 이력 리스트
 
-    public static HistoryDetailDto createHistory(History history) {
+    public static HistoryDetailDto createHistory(List<History> historyList, HistoryAggregateInfo historyAggregateInfo, HistoryDetailByDateDto historyDetailByDateDto) {
+
         HistoryDetailDto dto = new HistoryDetailDto();
+        TotalExerciseKind totalExerciseKind = new TotalExerciseKind();
 
-        dto.historyId = history.getId();
-        dto.exerciseId = history.getExercise().getId();
-        dto.category = history.getExercise().getCategory();
-        dto.exerciseName = history.getExercise().getName();
-        dto.startDate = history.getStartDate();
-        dto.endDate = history.getEndDate();
-        dto.exerciseSet = history.getExerciseSet();
-        dto.weight = history.getWeight();
-        dto.count = history.getCount();
+        for(History history: historyList) {
+            totalExerciseKind.createTotalExerciseKind(history.getExercise().getName(), history.getExercise().getCategory(), history.getCount());
+            dto.totalExerciseKind = totalExerciseKind;
+        }
+
+        dto.historyAggregateInfo = historyAggregateInfo;
+        dto.historyDetailList = historyDetailByDateDto;
 
         return dto;
     }

@@ -11,14 +11,14 @@ public class FindExerciseDetailInfoDto {
     private Long exerciseId;
     private String name;
     private Category category;
-    private List<RoutineExerciseDetailDto> routineExerciseDtoList;
+    private List<RoutineExerciseDetailDto> routineExerciseList;
 
     public static FindExerciseDetailInfoDto createFindExerciseDetailInfo(FindExerciseDetailInfoDto dto, List<RoutineExerciseDetailDto> dtoList) {
         FindExerciseDetailInfoDto findExerciseDetailInfoDto = new FindExerciseDetailInfoDto();
         findExerciseDetailInfoDto.exerciseId = dto.exerciseId;
         findExerciseDetailInfoDto.name = dto.name;
         findExerciseDetailInfoDto.category = dto.category;
-        findExerciseDetailInfoDto.routineExerciseDtoList = dtoList;
+        findExerciseDetailInfoDto.routineExerciseList = dtoList;
 
         return findExerciseDetailInfoDto;
     }

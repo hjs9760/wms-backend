@@ -16,5 +16,5 @@ public class UpdateRoutineDto {
     @NotBlank
     private String name;
     @NotNull
-    private List<UpdateRoutineExerciseDto> updateRoutineExerciseDtoList;
+    private List<UpdateRoutineExerciseDto> updateRoutineExerciseList;
 }

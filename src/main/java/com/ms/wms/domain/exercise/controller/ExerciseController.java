@@ -63,7 +63,18 @@ public class ExerciseController {
     }
 
     @GetMapping("/findMyList")
-    public List<FindExerciseDetailDto> findExerciseByMemberId(@AuthenticationPrincipal Long memberId) {
-        return exerciseService.findExerciseByMemberId(memberId);
+    public List<ExerciseListByCategoryDto> findExerciseByMemberId(@AuthenticationPrincipal Long memberId) {
+        Map<Category, List<FindExerciseDetailDto>> map = exerciseService.findExercise(memberId).stream()
+                .collect(Collectors.groupingBy(FindExerciseDetailDto::getCategory));
+
+        List<ExerciseListByCategoryDto> result = new ArrayList<>();
+        for (Category category : map.keySet()) {
+            ExerciseListByCategoryDto exerciseListByCategoryDto =
+                    new ExerciseListByCategoryDto(category, map.get(category));
+
+            result.add(exerciseListByCategoryDto);
+        }
+
+        return result;
     }
 }
