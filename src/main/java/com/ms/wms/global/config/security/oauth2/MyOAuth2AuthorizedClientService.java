@@ -1,20 +1,14 @@
 package com.ms.wms.global.config.security.oauth2;
 
-import com.ms.wms.domain.member.application.MemberJoinedEvent;
 import com.ms.wms.domain.member.application.OAuth2MemberJoinService;
 import com.ms.wms.domain.member.domain.Member;
-import com.ms.wms.domain.member.domain.MemberRepository;
-import com.ms.wms.domain.member.domain.Role;
 import com.ms.wms.global.config.security.oauth2.custom.MyOAuth2User;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.OAuth2RefreshToken;
-
-import java.util.Optional;
 
 
 @RequiredArgsConstructor

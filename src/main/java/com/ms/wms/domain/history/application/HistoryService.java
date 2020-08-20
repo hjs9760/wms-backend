@@ -38,8 +38,6 @@ public class HistoryService {
         HistoryAggregateInfo historyAggregateInfo =  historyRepository.findHistoryAggregateInfo(memberId, findHistoryDto.getStartDate(), findHistoryDto.getEndDate());
         HistoryDetailByDateDto historyDetailByDateDto = historyRepository.findHistoryRepository(memberId, findHistoryDto.getStartDate(), findHistoryDto.getEndDate());
 
-
-
         HistoryDetailDto dto = HistoryDetailDto.createHistory(historyList, historyAggregateInfo, historyDetailByDateDto);
 
 

@@ -3,7 +3,6 @@ package com.ms.wms.global.config.security.oauth2;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
-import org.springframework.security.oauth2.core.oidc.IdTokenClaimNames;
 
 /**
  * ClientRegistration.java : OAuth2 제공자에 등록된 Client(WMS App)의 정보를 나타내는 클래스
@@ -41,27 +40,9 @@ public enum CustomOAuthProvider {
                     .userNameAttributeName("id")
                     .clientName("Naver");
         }
-    },
-
-    GOOGLE {
-
-        @Override
-        public ClientRegistration.Builder getBuilder() {
-            ClientRegistration.Builder builder = getBuilder("google", ClientAuthenticationMethod.BASIC);
-            builder.scope("openid", "profile", "email");
-            builder.authorizationUri("https://accounts.google.com/o/oauth2/v2/auth");
-            builder.tokenUri("https://www.googleapis.com/oauth2/v4/token");
-            builder.jwkSetUri("https://www.googleapis.com/oauth2/v3/certs");
-            builder.userInfoUri("https://www.googleapis.com/oauth2/v3/userinfo");
-            builder.clientId("840982442115-7sad3uj6e3l1d8nlalf77rpibncik2t4.apps.googleusercontent.com");
-            builder.clientSecret("LVlo8BtzPO8inREUEzGc2ug2");
-            builder.userNameAttributeName(IdTokenClaimNames.SUB);
-            builder.clientName("Google");
-            return builder;
-        }
     };
 
-        private static final String DEFAULT_LOGIN_REDIRECT_URL = "{baseUrl}/login/oauth2/code/{registrationId}";
+    private static final String DEFAULT_LOGIN_REDIRECT_URL = "{baseUrl}/login/oauth2/code/{registrationId}";
 
     protected final ClientRegistration.Builder getBuilder(String registrationId,
                                                           ClientAuthenticationMethod method) {
